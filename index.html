@@ -9,27 +9,71 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="animate.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="hover.css"></link>
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
-	<h1 class="animated fadeInUp">Hello World!</h1>
-	<p class="animated fadeInUp">I'm hosted with GitHub Pages.</p>
-	<p class="animated fadeInUp">Sample</p>
-	How does it look?
+	<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Features</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Pricing</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Dropdown link
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
+	<div id="intro" class="view">
+		<div class="full-bg-img">
+			<div class="container">
+				<div class="row" style="height: 500px;">
+				</div>
+				<div class="row" data-aos="fade-up" data-aos-delay="650" data-aos-duration="1500" data-aos-mirror="false" data-aos-once="true">
+					<h1 class="display-2 text-white" style="font-family: Aileron;">Hello, World!</h1>
+				</div>
+				<div class="row" data-aos="fade-up" data-aos-delay="650" data-aos-duration="1500" data-aos-mirror="false" data-aos-once="true">
+					<p class="display-4 text-white" style="font-family: Aileron;">This is my first website.</p>
+				</div>
+			</div>
+		</div>
+		
+	</div>
 	<div class="container">
+		<div class="row" style="height: 200px;">
+			
+		</div>
 		<div class="row">
 			<div class="col">
 				<div data-aos="fade-in">
-					<img src="http://www.tompetty.com/sites/g/files/g2000007521/f/Sample-image10-highres.jpg"
-					class="img-fluid" alt="Responsive image">
+					<img src="images/apples.jpg" class="img-fluid" alt="Responsive image">
+					Hello World
 				</div>
 			</div>
 			<div class="col">
 				<div data-aos="fade-up">
-					<img src="http://www.usa-essays.com/blog/wp-content/uploads/2017/09/sample-5.jpg"
-					class="img-fluid">
+					<img src="http://www.usa-essays.com/blog/wp-content/uploads/2017/09/sample-5.jpg" class="img-fluid">
+					Hello World Right
 				</div>
 			</div>
 		</div>

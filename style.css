@@ -1,0 +1,23 @@
+/*Your custom styles here*/
+
+html,
+body,
+header,
+#intro {
+	height:100%;
+}
+
+#intro {
+	background: 
+		linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.45)),
+		url("images/background.jpg")no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+@font-face {
+	font-family: 'Aileron';
+	src:url("rsc/Aileron-ultralight.otf");
+}
