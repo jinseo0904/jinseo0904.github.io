@@ -19,6 +19,6 @@ header,
 
 @font-face {
 	font-family: 'Aileron';
-	src:url("rsc/Aileron-UltraLight.eot") format('embedded-opentype'),
-	url("rsc/Aileron-UltraLight.otf") format('opentype');
+	src:url("rsc/Aileron-ultralight.eot") format('embedded-opentype'),
+	url("rsc/Aileron-ultralight.otf") format('opentype');
 }
