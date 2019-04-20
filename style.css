@@ -149,12 +149,20 @@ body, html {
 }
 
 .center {
-  	display: flex;
-    align-items: center;
+  	display: table;
+    margin: auto;
 }
 
 .middle > * {
   vertical-align: middle;
+}
+
+.gradient {
+	display: table-cell;
+	text-transform: uppercase;
+	background: -webkit-linear-gradient(right, #B7F8DB , #50A7C2);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 @font-face {
@@ -164,3 +172,4 @@ body, html {
 }
 
 font-family: 'Montserrat', sans-serif;
+html{scroll-behavior:smooth}
