@@ -28,6 +28,15 @@ body, html {
 	margin: 0 !important;
 }
 
+a.nav-link {
+	transition: color 0.5s ease;
+}
+
+a.nav-link:hover {
+	color: #555555 !important;
+
+}
+
 /*mouse hover: slider effect*/
 #slide {
 	position: absolute;
@@ -151,6 +160,12 @@ body, html {
 .center {
   	display: table;
     margin: auto;
+}
+
+.center2 {
+	margin-left:auto;
+   	margin-right:auto;
+   	display:block;
 }
 
 .middle > * {
