@@ -37,6 +37,14 @@ a.nav-link:hover {
 
 }
 
+#rocket {
+	transition: transform .7s ease;
+}
+
+#rocket:hover {
+	transform: translateY(-30px);
+}
+
 /*mouse hover: slider effect*/
 #slide {
 	position: absolute;
