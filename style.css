@@ -45,6 +45,14 @@ a.nav-link:hover {
 	transform: translateY(-30px);
 }
 
+#penn {
+	transition: transform .7s ease;
+}
+
+#penn:hover {
+	transform: scale(1.03);
+}
+
 /*mouse hover: slider effect*/
 #slide {
 	position: absolute;
@@ -184,6 +192,14 @@ a.nav-link:hover {
 	display: table-cell;
 	text-transform: uppercase;
 	background: -webkit-linear-gradient(right, #B7F8DB , #50A7C2);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.gradient2 {
+	display: table-cell;
+	text-transform: uppercase;
+	background: -webkit-linear-gradient(right, #a1c4fd, #c2e9fb);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
