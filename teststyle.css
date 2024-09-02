@@ -1,7 +1,0 @@
-#insta {
-	transition: transform .3s;
-}
-
-#insta:hover {
-	transform: scale(1.5);
-}
