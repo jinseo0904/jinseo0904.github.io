@@ -33,6 +33,6 @@ I'm a dedicated coffee enthusiast, and my day isn't complete without a double-sh
 Here are a few snapshots of my coffeehead journey:
 
 ![coffee1](../images/coffee_1.PNG){: width="300px"}
-![coffee2](../images/coffee_2.PNG){: width="300px"} 
-![coffee3](../images/coffee_3.PNG){: width="300px"}
-![coffee4](../images/coffee_4.PNG){: width="300px"} 
+![coffee2](../images/coffee_2.png){: width="300px"} 
+![coffee3](../images/coffee_3.png){: width="300px"}
+![coffee4](../images/coffee_4.png){: width="300px"} 
