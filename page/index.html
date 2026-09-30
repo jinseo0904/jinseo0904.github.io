@@ -19,7 +19,7 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap">
-  <link rel="stylesheet" href="{{ '/page/page.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/page/page.css' | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='25,6 75,6 100,50 75,94 25,94 0,50' fill='%23f6c629'/></svg>">
 </head>
 <body>
@@ -358,6 +358,6 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   </div>
 </div>
 
-<script src="{{ '/page/page.js' | relative_url }}"></script>
+<script src="{{ '/page/page.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
