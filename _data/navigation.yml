@@ -8,14 +8,11 @@ main:
   - title: "Publications"
     url: /publications/
 
-  - title: "Teaching"
-    url: /teaching/    
-    
-  - title: "Projects"
-    url: /portfolio/
-   
+  - title: "PAGE 🧩"
+    url: /page/
+
   - title: "CV"
     url: /cv/
 
-  - title: "Order Coffee"
+  - title: "Coffee 🫘"
     url: /coffee/

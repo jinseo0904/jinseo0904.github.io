@@ -1,0 +1,38 @@
+{% include base_path %}
+
+<div class="list__item">
+  <article class="archive__item pub-card" itemscope itemtype="http://schema.org/CreativeWork">
+    <h2 class="archive__item-title pub-card__title" itemprop="headline">
+      <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ post.title }}</a>
+    </h2>
+
+    {% if post.authors %}
+      <p class="pub-card__authors">{{ post.authors | markdownify | remove: "<p>" | remove: "</p>" }}</p>
+    {% endif %}
+
+    <p class="pub-card__venue">
+      <i>{{ post.venue }}</i>{% if post.venue_details %}. {{ post.venue_details }}{% endif %}
+      {% if post.doi %}<br /><a href="{{ post.doi }}">{{ post.doi }}</a>{% endif %}
+    </p>
+
+    <div class="pub-card__actions">
+      {% if post.linkurl %}
+        <a class="pub-btn" href="{{ post.linkurl }}"><i class="fas fa-link" aria-hidden="true"></i>Link</a>
+      {% endif %}
+      {% if post.paperurl %}
+        <a class="pub-btn" href="{% if post.paperurl contains '://' %}{{ post.paperurl }}{% else %}{{ base_path }}{{ post.paperurl }}{% endif %}" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i>PDF</a>
+      {% endif %}
+      {% if post.abstract %}
+        <button type="button" class="pub-btn pub-btn--toggle" aria-expanded="false"><i class="fas fa-align-left" aria-hidden="true"></i>Abstract</button>
+      {% endif %}
+      {% if post.bibtex %}
+        <button type="button" class="pub-btn pub-btn--bibtex"><i class="fas fa-quote-right" aria-hidden="true"></i><span class="pub-btn__label">Copy BibTeX</span></button>
+        <textarea class="pub-card__bibtex" hidden readonly>{{ post.bibtex | strip }}</textarea>
+      {% endif %}
+    </div>
+
+    {% if post.abstract %}
+      <div class="pub-card__abstract" hidden>{{ post.abstract | markdownify }}</div>
+    {% endif %}
+  </article>
+</div>

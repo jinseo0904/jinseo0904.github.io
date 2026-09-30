@@ -1,0 +1,359 @@
+---
+layout: null
+permalink: /page/
+title: "PAGE: Personalized Adaptive Games for Engagement"
+---
+{% assign pub = site.publications | where: "permalink", "/publication/2026-11-02-page-uist" | first %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PAGE · Personalized Adaptive Games for Engagement (UIST ’26)</title>
+  <meta name="description" content="PAGE turns participants’ own sensing data and self-reports into personalized word puzzles — and uses the puzzle itself as a voluntary channel for richer data. UIST 2026.">
+  <script>
+    (function () {
+      var t; try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="{{ '/page/page.css' | relative_url }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='25,6 75,6 100,50 75,94 25,94 0,50' fill='%23f6c629'/></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top">PAGE</a>
+  <nav>
+    <span class="links">
+      <a href="#idea">Idea</a>
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#cite">Cite</a>
+    </span>
+    <a href="{{ '/' | relative_url }}">Jin-seo Kim ↗</a>
+    <button class="icon-btn" id="theme-btn" type="button" aria-label="Toggle dark mode">◐</button>
+  </nav>
+</header>
+
+<!-- ============ Entry gate: spell PAGE to enter ============ -->
+<section class="gate" id="top" aria-label="Word puzzle entry">
+  <div class="gate-inner">
+    <div class="gate-head">
+      <div class="kicker">Accepted to UIST ’26</div>
+      <h1>Guess a hidden word to enter: <span class="blank">PAGE</span></h1>
+    </div>
+    <div class="gate-help">
+      <ul class="rules">
+        <li>Use only letters in the hive.</li>
+        <li>Include the <b class="center-word">yellow center letter</b>.</li>
+      </ul>
+      <a class="skip" href="#paper">Skip the puzzle, take me to the website ↓</a>
+    </div>
+
+    <div class="puzzle" id="gate-puzzle" data-letters="AGMEPLY" data-center="A">
+      <div class="entry" aria-live="polite"></div>
+      <div class="msg" aria-live="polite"></div>
+      <div class="hive"></div>
+      <div class="controls">
+        <button class="pill" data-act="del" type="button">Delete</button>
+        <button class="pill round" data-act="shuffle" type="button" aria-label="Shuffle letters">⟳</button>
+        <button class="pill primary" data-act="enter" type="button">Enter</button>
+      </div>
+      <button class="clue locked hint-cta" id="gate-clue" type="button">
+        <span class="tag">?</span>
+        <span class="text">💡 Stuck? Tap for a hint.</span>
+      </button>
+      <div class="datapoint" id="gate-datapoint" role="status"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Paper header ============ -->
+<section class="paper-head" id="paper">
+  <div class="wrap">
+    <div class="venue"><b>UIST ’26</b> Detroit, MI · November 2–5, 2026</div>
+    <h1>Generating Personalized Games with Sensing Data to Support Self-Reported Data Collection</h1>
+    <p class="sub">PAGE turns a participant’s own passive sensing data and self-reports into a personalized daily word puzzle. The puzzle then becomes a voluntary channel for collecting richer data.</p>
+    <p class="authors">
+      <span class="me">Jin-seo Kim</span><span>Ha Le</span><span>Akshat Choube</span><span>Varun Mishra</span><span>Stephen S Intille</span>
+    </p>
+    <p class="affil">Northeastern University · Khoury College of Computer Sciences</p>
+    <div class="actions-row">
+      <a class="primary" href="{{ '/files/PAGE_UIST.pdf' | relative_url }}" target="_blank" rel="noopener">📄 Paper PDF</a>
+      <a href="https://doi.org/10.1145/3830398.3830678">🔗 ACM DOI</a>
+      <a href="#demo">🐝 Try the demo</a>
+      <button type="button" data-copy="#bibtex">❝ Copy BibTeX</button>
+    </div>
+
+    <div class="tldr">
+      <div class="hx">TL;DR</div>
+      <p>Long-term self-report studies lose participants to survey fatigue, and adding points or leaderboards doesn’t improve the data much. <b>PAGE</b> goes further. An LLM reads yesterday’s smartwatch self-reports and sensor data, writes a short diary of the participant’s day, and turns it into <b>personalized clues</b> for a word-wheel puzzle. To unlock a clue, the participant answers a quick question, which gives researchers <b>more data</b>. In a 2-week study (N=15), <b>80%</b> preferred the puzzle week, participants gave <b>72 more unique contextual tags</b>, and they answered <b>1,188 extra questions</b> without payment.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ The idea ============ -->
+<section class="block alt" id="idea">
+  <div class="wrap">
+    <div class="eyebrow">The idea</div>
+    <h2>Your data becomes the game.<br>The game collects more data.</h2>
+    <p class="intro">Most gamified surveys add rewards on top of the same survey. PAGE builds the game out of the data being collected, which creates a positive feedback loop. Personalized puzzles keep participants engaged, engaged participants give richer reports, and richer reports make better puzzles.</p>
+
+    <div class="loop-grid">
+      <div class="loop" aria-hidden="true">
+        <svg viewBox="0 0 460 430">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--honey-2)"/></marker>
+            <marker id="at" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--teal)"/></marker>
+          </defs>
+          <path class="arc h" d="M300 70 Q 415 120 405 270" marker-end="url(#ah)"/>
+          <path class="arc h" d="M340 372 Q 230 425 120 372" marker-end="url(#ah)"/>
+          <path class="arc t" d="M55 270 Q 45 120 160 70" marker-end="url(#at)"/>
+          <polygon class="core" points="200,168 260,168 290,220 260,272 200,272 170,220"/>
+          <text class="core-t" x="230" y="227" text-anchor="middle">PAGE</text>
+          <g class="node"><rect x="150" y="30" width="160" height="56" rx="12"/><text x="230" y="54" text-anchor="middle">You, yesterday</text><text class="s" x="230" y="72" text-anchor="middle">µEMA + sensing</text></g>
+          <g class="node"><rect x="320" y="290" width="130" height="56" rx="12"/><text x="385" y="314" text-anchor="middle">Your puzzle</text><text class="s" x="385" y="332" text-anchor="middle">personal clues</text></g>
+          <g class="node"><rect x="10" y="290" width="130" height="56" rx="12"/><text x="75" y="314" text-anchor="middle">Richer data</text><text class="s" x="75" y="332" text-anchor="middle">unlock questions</text></g>
+          <text x="430" y="170" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="end">LLM writes clues</text>
+          <text x="230" y="420" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">play → answer to unlock</text>
+          <text x="30" y="170" font-family="var(--mono)" font-size="11" fill="var(--muted)">more detail</text>
+        </svg>
+      </div>
+      <div class="compare">
+        <div class="row">
+          <div class="lbl">Classic EMA</div>
+          <p>A buzz every 15 minutes: “What are you doing?” The same question over and over, and answers get shorter as the weeks go by.</p>
+        </div>
+        <div class="row">
+          <div class="lbl">Gamified EMA</div>
+          <p>Points, badges, and leaderboards are added on top. They can improve compliance, but the game has nothing to do with what you reported.</p>
+        </div>
+        <div class="row new">
+          <div class="lbl">PAGE</div>
+          <p>The game is made from your own day. Yesterday’s “calling my friend on the train” becomes today’s clue: <i>“You were ____ing your friend on your way home.”</i> Answering a question to unlock that hint gives researchers more data.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modules">
+      <div class="module"><div class="ico">🧩</div><h3>Game module</h3><p>A game people already enjoy playing regularly. The prototype uses a Spelling-Bee-style word wheel: seven letters, and every word must include the center letter.</p></div>
+      <div class="module"><div class="ico">⌚</div><h3>Data collection module</h3><p>Multimodal µEMA on a smartwatch (answer by tap or voice) every 15 minutes, plus passive phone and watch sensing: GPS, steps, heart rate, and more.</p></div>
+      <div class="module"><div class="ico">✨</div><h3>Personalization module</h3><p>A local LLM (Gemma 3, 27B) turns yesterday’s data into a diary and writes a personalized fill-in-the-blank clue for each puzzle word.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ How it works (pipeline) ============ -->
+<section class="block" id="how">
+  <div class="wrap">
+    <div class="eyebrow">How it works</div>
+    <h2>From yesterday’s data to today’s puzzle</h2>
+    <p class="intro">Every night at 3 AM, PAGE turns the previous day’s data into a new puzzle. The example below follows one fictional day, based on the example in the paper’s Figure 3.</p>
+
+    <div class="pipeline">
+      <div class="stage data">
+        <div class="num">1</div>
+        <div class="body">
+          <h3>Collect: self-reports + passive sensing</h3>
+          <p class="desc">The watch asks about posture and activity every 15 minutes, and participants answer by voice or tap. The phone and watch also passively log location, steps, heart rate, and more.</p>
+          <div class="timeline">
+            <div class="ev"><span class="t">7:02 AM</span><span>🎙</span><div><q>Eating a bowl of cereal in the kitchen</q> <span class="src">µEMA · voice</span></div></div>
+            <div class="ev"><span class="t">9:00 AM</span><span>🎙</span><div><q>Standing, washing my face, getting ready for college</q> <span class="src">µEMA · voice</span></div></div>
+            <div class="ev"><span class="t">12:15 PM</span><span>📍</span><div>Stationary cluster near campus · nearby POI: café <span class="src">GPS + OpenStreetMap</span></div></div>
+            <div class="ev"><span class="t">12:30 PM</span><span>🎙</span><div><q>Sitting at the café with a latte, working on my laptop</q> <span class="src">µEMA · voice</span></div></div>
+            <div class="ev"><span class="t">2:48 PM</span><span>❤️</span><div>High heart rate · 1,900 steps in 12 min · <b>Walking</b> tapped <span class="src">HR + steps + µEMA tap</span></div></div>
+            <div class="ev"><span class="t">8:04 PM</span><span>🎙</span><div><q>Sitting on the train, calling my friend</q> <span class="src">µEMA · voice</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="num">2</div>
+        <div class="body">
+          <h3>Synthesize: a narrative diary of your day</h3>
+          <p class="desc">The data is put in time order and given to the LLM, which writes a first-person diary. The prompt tells it to keep specific details (“a latte,” not “a drink”) and not to invent anything.</p>
+          <div class="diary" id="diary" data-text="I spent the night at &lt;Home&gt;. At 7 AM I had a bowl of [cereal] in the kitchen, and by 9 AM I was standing and washing my [face], getting ready for college. Around noon I settled into a [café] near &lt;Campus&gt; with a latte, working on my laptop. In the afternoon my heart rate spiked as I walked fast to make my 3 PM lecture. At 8 PM I walked to &lt;Station&gt; to get back home. I was sitting, [calling] my friend on the train."></div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="num">3</div>
+        <div class="body">
+          <h3>Generate: a word wheel and its word list</h3>
+          <p class="desc">A random 7-letter seed word sets the letters, and one letter is picked as the center. Every valid dictionary word is extracted. Rare, inflected, obsolete, and jargon words are then filtered out, first by word frequency and then by the LLM.</p>
+          <div class="wordgen">
+            <div class="seed">seed word: CAREFUL · center: C
+              <div class="letters"><span>A</span><span>R</span><span>E</span><span class="c">C</span><span>F</span><span>U</span><span>L</span></div>
+            </div>
+            <div class="words-cloud">
+              <span>CALL</span><span>FACE</span><span>CAFE</span><span>CEREAL</span><span>CELLULAR</span><span>CARE</span><span>RACE</span><span>CLEAR</span><span>LACE</span><span>CURL</span><span>CAREFUL</span><span>CLUE</span><span>CALF</span><span>CURE</span><span>ACRE</span>
+              <span class="cut" data-why="rare">LUCRE</span><span class="cut" data-why="-ed">CALLED</span><span class="cut" data-why="-er role">CULLER</span><span class="cut" data-why="jargon">CURULE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="num">4</div>
+        <div class="body">
+          <h3>Personalize: a clue for each word, drawn from your day</h3>
+          <p class="desc">The LLM links puzzle words to real moments in the diary. Words it can’t link get a “priming” clue that depends on your answer to a question, or a generic crossword-style clue as a last resort.</p>
+          <div class="cluegen">
+            <div class="ex"><b>FACE</b><span>Your morning routine involves carefully washing your ____. <span class="badge ctx">contextual · self-report</span></span></div>
+            <div class="ex"><b>CELLULAR</b><span>To call your friend on the train, your phone needed an active ________ service. <span class="badge ctx">contextual · logical link</span></span></div>
+            <div class="ex"><b>CARE</b><span>Depends on your answer to “Do you look after a pet or plant?” <span class="badge prime">priming</span></span></div>
+            <div class="ex"><b>CLEAR</b><span>Transparent, like a windowpane. <span class="badge">generic fallback</span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Playable demo ============ -->
+<section class="block alt" id="demo">
+  <div class="wrap">
+    <div class="eyebrow">Play it</div>
+    <h2>Today’s puzzle, from that day</h2>
+    <p class="intro">This is the puzzle generated from the fictional day above. Tap a clue card to unlock it, and answer the pop-up question just like participants did. The <b style="color:var(--teal)">researcher’s view</b> shows what each unlock adds to the dataset.</p>
+
+    <div class="play">
+      <div class="play-side">
+        <div class="puzzle" id="demo-puzzle" data-letters="CAREFUL" data-center="C">
+          <div class="entry" aria-live="polite"></div>
+          <div class="msg" aria-live="polite"></div>
+          <div class="hive"></div>
+          <div class="controls">
+            <button class="pill" data-act="del" type="button">Delete</button>
+            <button class="pill round" data-act="shuffle" type="button" aria-label="Shuffle letters">⟳</button>
+            <button class="pill primary" data-act="enter" type="button">Enter</button>
+          </div>
+          <div class="found"><span class="count">You haven’t found any words yet.</span><div class="words"></div></div>
+        </div>
+        <div class="researcher" aria-live="polite">
+          <div class="rh"><span>Researcher’s view: data from unlocks</span><span class="count" id="rcount">0</span></div>
+          <div class="log" id="rlog"><div class="empty">Nothing yet. Unlock a clue to add a data point.</div></div>
+        </div>
+        <p class="note">Everything here stays in your browser. This demo stores nothing and sends nothing.</p>
+      </div>
+
+      <div>
+        <div class="cards-head">
+          <h3>Clue cards</h3>
+          <div class="legend"><span class="badge ctx">contextual</span><span class="badge prime">priming</span><span class="badge">generic</span></div>
+        </div>
+        <div class="cards" id="cards"></div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Results ============ -->
+<section class="block" id="results">
+  <div class="wrap">
+    <div class="eyebrow">Feasibility study</div>
+    <h2>What happened when 15 people played for a week</h2>
+    <p class="intro">A within-subjects study: each participant spent one week with the smartwatch µEMA only and one week with µEMA plus daily personalized puzzles, in counterbalanced order.</p>
+
+    <div class="stats">
+      <div class="stat h"><div class="n" data-count="80">0<small>%</small></div><p>preferred the puzzle week (12 of 15)</p></div>
+      <div class="stat t"><div class="n" data-count="1188">0</div><p>extra in-game survey answers, voluntary and unpaid (~79 per participant)</p></div>
+      <div class="stat t"><div class="n" data-count="72" data-prefix="+">0</div><p>more unique contextual tags in self-reports (761 vs. 689)</p></div>
+      <div class="stat h"><div class="n" data-count="93">0<small>%</small></div><p>want to keep using it after the study (14 of 15)</p></div>
+    </div>
+
+    <div class="results-grid">
+      <div class="panel">
+        <h3>Richer self-reports during puzzle week</h3>
+        <p class="desc">Unique semantic tags parsed from spoken µEMA answers, e.g. “Sitting [posture] in my room [location], eating [activity] an apple [object].”</p>
+        <div class="bars" id="bars"></div>
+        <div class="key"><span><i style="background:var(--honey)"></i>Puzzle week</span><span><i style="background:var(--hex-hover)"></i>No-puzzle week</span></div>
+      </div>
+      <div class="panel">
+        <h3>Engagement at a glance</h3>
+        <p class="desc">Gameplay and usability during the puzzle week.</p>
+        <div class="mini">
+          <div class="line"><span>Days played (median)</span><b>5 of 7</b></div>
+          <div class="line"><span>Time played per day (mean)</span><b>22 min</b></div>
+          <div class="line"><span>Words found per puzzle (mean)</span><b>20.6</b></div>
+          <div class="line"><span>Clues unlocked per day (mean)</span><b>17.0</b></div>
+          <div class="line"><span>System Usability Scale</span><b>82.5</b></div>
+          <div class="line"><span>NASA-TLX workload</span><b>38.2 (low)</b></div>
+        </div>
+        <div class="caveat">The response rate declined more slowly in the puzzle week (−0.24%/day vs. −0.93%/day), but the difference in compliance was <b>not statistically significant</b>. This was a small feasibility study, and participants already enjoyed word puzzles.</div>
+      </div>
+    </div>
+
+    <div class="quotes">
+      <figure class="quote"><blockquote>“I started adding more specific details on where I am, what I’m doing, because I was expecting — how will the AI integrate all these things into my personal clues tomorrow?”</blockquote><figcaption>P08</figcaption></figure>
+      <figure class="quote"><blockquote>“I was reading a Nature article and then there was a clue about me as a bioinformatician reading a Nature article… I was surprised, like, it took all that into consideration.”</blockquote><figcaption>P08</figcaption></figure>
+      <figure class="quote"><blockquote>“It felt like the puzzle was learning about me as I play more of it… Maybe it might feel like a friend or a companion.”</blockquote><figcaption>P06</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Lessons ============ -->
+<section class="block alt" id="lessons">
+  <div class="wrap">
+    <div class="eyebrow">Design lessons</div>
+    <h2>What we’d tell the next person building one</h2>
+    <div class="lessons">
+      <div class="lesson"><div class="n">01</div><h3>Self-report clues beat location clues</h3><p>Participants easily connected clues to things they had said themselves. Clues from GPS often referred to places they had only passed through, which felt confusing or even unsettling. Prioritize data people recognize and feel ownership over.</p></div>
+      <div class="lesson"><div class="n">02</div><h3>Calibrate difficulty in both directions</h3><p>Puzzles with too many words (“once I knew there were 76 words…”) made people give up before starting. Puzzles that were too easy were boring. Adjust difficulty and the strength of hints to each player.</p></div>
+      <div class="lesson"><div class="n">03</div><h3>Keep unlock questions from interrupting play</h3><p>Eight of 15 participants didn’t mind trading answers for hints. Seven found the pop-ups disruptive. Consider fewer prompts, multiple choice only, or answering questions before the game starts.</p></div>
+      <div class="lesson"><div class="n">04</div><h3>Give people control over their data</h3><p>Show people which data shapes their clues, and let them opt out of certain sources (such as location) at any time. The discomfort around privacy is also a chance to build better-informed consent over the course of a study.</p></div>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><div class="k">Participants</div><div class="v">15 people who play word puzzles</div></div>
+      <div class="fact"><div class="k">Design</div><div class="v">2 weeks, within-subjects, counterbalanced</div></div>
+      <div class="fact"><div class="k">µEMA</div><div class="v">Every 15 min, 8 AM–10 PM, voice or tap</div></div>
+      <div class="fact"><div class="k">Prompts answered</div><div class="v">5,286 of 6,821 (70% by voice)</div></div>
+      <div class="fact"><div class="k">LLM</div><div class="v">Gemma 3 27B, run locally for privacy</div></div>
+      <div class="fact"><div class="k">Platform</div><div class="v">Android app + Wear OS smartwatch</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Cite ============ -->
+<section class="block" id="cite">
+  <div class="wrap">
+    <div class="eyebrow">Cite</div>
+    <h2>BibTeX</h2>
+    <p class="intro" style="font-size:16px">Jin-seo Kim, Ha Le, Akshat Choube, Varun Mishra, and Stephen S Intille. 2026. Generating Personalized Games with Sensing Data to Support Self-Reported Data Collection. In <i>The 39th Annual ACM Symposium on User Interface Software and Technology (UIST ’26)</i>. ACM. <a href="https://doi.org/10.1145/3830398.3830678">https://doi.org/10.1145/3830398.3830678</a></p>
+    <div class="cite">
+      <pre id="bibtex">{{ pub.bibtex | strip | escape }}</pre>
+      <button class="pill" type="button" data-copy="#bibtex">Copy</button>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 The authors. Paper licensed CC BY 4.0.</span>
+    <span>Supported in part by Khoury College of Computer Sciences, Northeastern University. <a href="{{ '/' | relative_url }}">← Back to Jin-seo’s homepage</a></span>
+  </div>
+</footer>
+
+<!-- micro-survey dialog -->
+<div class="sheet-backdrop" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
+  <div class="sheet">
+    <div class="cat" id="sheet-cat"></div>
+    <h3 id="sheet-q"></h3>
+    <div id="sheet-body"></div>
+    <div class="actions">
+      <button type="button" id="sheet-cancel">CANCEL</button>
+      <button type="button" id="sheet-submit" class="submit" disabled>SUBMIT</button>
+    </div>
+    <div class="fine">In PAGE, answering unlocks the hint, and your answer becomes study data.</div>
+  </div>
+</div>
+
+<script src="{{ '/page/page.js' | relative_url }}"></script>
+</body>
+</html>

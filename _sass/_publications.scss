@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Publication cards (authors, venue, and action buttons)
+   ========================================================================== */
+
+.pub-card {
+  padding-bottom: 0.5em;
+
+  p {
+    margin: 0.35em 0;
+  }
+}
+
+.pub-card__title {
+  margin-bottom: 0.25em;
+  line-height: 1.35;
+}
+
+.pub-card__authors {
+  font-size: $type-size-5;
+
+  strong {
+    color: $darker-gray;
+  }
+}
+
+.pub-card__venue {
+  font-size: $type-size-6;
+  color: $gray;
+
+  a {
+    word-break: break-all;
+  }
+}
+
+.pub-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 0.75em;
+}
+
+.pub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.35em 0.9em;
+  font-family: $global-font-family;
+  font-size: $type-size-6;
+  font-weight: 600;
+  line-height: 1.5;
+  color: $dark-gray;
+  background-color: #fff;
+  border: 1px solid $border-color;
+  border-radius: 999px;
+  text-decoration: none !important; // override .archive a { underline }
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+
+  i {
+    color: $link-color;
+    transition: color 0.15s ease;
+  }
+
+  &:visited {
+    color: $dark-gray;
+  }
+
+  &:hover,
+  &:focus-visible,
+  &[aria-expanded="true"] {
+    color: #fff;
+    background-color: $link-color;
+    border-color: $link-color;
+    box-shadow: 0 2px 6px rgba($link-color, 0.3);
+
+    i {
+      color: #fff;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid mix(#000, $link-color, 25%);
+    outline-offset: 2px;
+  }
+
+  &.is-copied,
+  &.is-copied:hover {
+    color: #fff;
+    background-color: $success-color;
+    border-color: $success-color;
+    box-shadow: none;
+
+    i {
+      color: #fff;
+    }
+  }
+}
+
+.pub-card__abstract {
+  margin-top: 0.75em;
+  padding: 0.75em 1em;
+  font-size: $type-size-6;
+  line-height: 1.6;
+  background-color: $code-background-color;
+  border-left: 3px solid $link-color;
+  border-radius: $border-radius;
+
+  p {
+    margin: 0;
+  }
+}
+
+// Theme form styles would otherwise override the [hidden] attribute
+.pub-card__bibtex,
+.pub-card__abstract[hidden] {
+  display: none !important;
+}

@@ -24,7 +24,7 @@ author:
   avatar           : "jinseo_profile.png"
   name             : "Jin-seo Kim"
   pronouns         : "he/him"  
-  bio              : "1st year PhD student at Northeastern University | UPenn '24"
+  bio              : "3rd year PhD student at Northeastern University | UPenn '24"
   location         : "Boston, MA"
   employer         : "Northeastern University"
   uri              : "https://www.mhealthgroup.org/"
@@ -77,10 +77,10 @@ author:
 publication_category:
   books:
     title: 'Books'
-  manuscripts:
-    title: 'Journal Articles'    
   conferences:
     title: 'Conference Papers'
+  manuscripts:
+    title: 'Journal Articles'
 
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"

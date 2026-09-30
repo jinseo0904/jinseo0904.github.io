@@ -1,0 +1,512 @@
+/* ==========================================================================
+   Light polish + dark theme
+   Dark mode is applied with <html data-theme="dark"> (see assets/js/theme.js)
+   ========================================================================== */
+
+/*
+   Light polish
+   ========================================================================== */
+
+// Softer, offset underlines for links in page content
+.page__content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: rgba($link-color, 0.45);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+// Section headings on pages (e.g. "I am interested in...", "Recent News")
+.page__content > h1 {
+  margin-top: 1.75em;
+  padding-bottom: 0.35em;
+  font-size: $type-size-4;
+  border-bottom: 1px solid $border-color;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 2.5em;
+    height: 3px;
+    margin-top: 0.35em;
+    margin-bottom: calc(-0.35em - 2px);
+    background: $link-color;
+    border-radius: 2px;
+  }
+}
+
+// Slightly airier nested lists
+.page__content li > ul {
+  margin-top: 0.5em;
+}
+
+.page__content li {
+  margin-bottom: 0.35em;
+}
+
+// News list rendered as a simple timeline (add {: .news-list} under the list)
+.news-list {
+  list-style: none;
+  margin-left: 0.4em;
+  padding-left: 0;
+  border-left: 2px solid $border-color;
+
+  // Date sits in its own column; wrapped lines stay aligned with the text
+  $news-date-col: 7.25em;
+
+  li {
+    position: relative;
+    margin-bottom: 0.9em;
+    padding-left: calc(1.25em + #{$news-date-col});
+
+    @include breakpoint(max-width $medium) {
+      padding-left: 1.25em;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: calc(-0.3em - 1px);
+      top: 0.55em;
+      width: 0.6em;
+      height: 0.6em;
+      background: $background-color;
+      border: 2px solid $link-color;
+      border-radius: 50%;
+    }
+
+    &:first-child::before {
+      background: $link-color;
+    }
+
+    > strong:first-child {
+      position: absolute;
+      top: 0;
+      left: calc(1.25em / 0.75);
+      line-height: 2; // matches the 1.5 body line-height at 0.75em size
+      font-size: $type-size-6;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: $gray;
+
+      // On small screens the date goes on its own line above the text
+      @include breakpoint(max-width $medium) {
+        position: static;
+        display: block;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+/*
+   Monospace accent font (top navbar + homepage name)
+   ========================================================================== */
+
+$mono-accent: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+.masthead__inner-wrap {
+  font-family: $mono-accent;
+  letter-spacing: -0.01em;
+}
+
+.greedy-nav .visible-links li:first-child {
+  font-weight: 800;
+}
+
+// Big name heading on the homepage (set `title_class: page__title--hero` in front matter)
+.page__title--hero {
+  margin-bottom: 0.4em;
+  font-family: $mono-accent;
+  font-size: 3.6em; // ~2.3x the default page title
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+
+  @include breakpoint(max-width $medium) {
+    font-size: 2.6em;
+  }
+}
+
+/*
+   Sidebar (author profile) polish
+   ========================================================================== */
+
+.sidebar {
+  .author__name {
+    font-family: $mono-accent;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: $darker-gray;
+  }
+
+  .author__pronouns {
+    display: inline-block;
+    color: $gray;
+    font-size: 0.7em;
+    letter-spacing: 0.02em;
+  }
+
+  .author__bio {
+    color: $dark-gray;
+  }
+
+  @include breakpoint($large) {
+    .author__avatar img {
+      padding: 4px;
+      box-shadow: 0 4px 14px rgba(#000, 0.08);
+    }
+
+    .author__name {
+      margin: 16px 0 6px;
+      font-size: 1.3em;
+      line-height: 1.2;
+    }
+
+    .author__pronouns {
+      margin: 0 0 10px;
+      padding: 1px 9px;
+      font-family: $mono-accent;
+      border: 1px solid $border-color;
+      border-radius: 999px;
+    }
+
+    .author__bio {
+      margin: 0 0 18px;
+      font-size: 0.8em;
+      line-height: 1.55;
+    }
+
+    .author__urls-wrapper {
+      padding-top: 16px;
+      border-top: 1px solid $border-color;
+    }
+
+    .author__urls {
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2px;
+        font-size: 0.8em;
+        white-space: normal;
+      }
+
+      // Location / employer: plain info lines
+      li.author__desktop {
+        padding: 3px 0;
+        color: $gray;
+      }
+
+      li.author__desktop:nth-child(2) {
+        margin-bottom: 10px;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 3px 0;
+        font-size: 1em;
+        color: $dark-gray;
+        transition: color 0.15s ease, transform 0.15s ease;
+
+        &:hover {
+          color: $link-color;
+          text-decoration: none;
+          transform: translateX(2px);
+
+          i { color: $link-color; }
+        }
+      }
+
+      // Uniform, monochrome icons in a fixed-width column
+      i,
+      .fa, .fas, .fab, .fa-solid, .ai {
+        flex: 0 0 1.25em;
+        width: 1.25em;
+        margin-right: 0.65em;
+        padding-right: 0;
+        text-align: center;
+        font-size: 1em;
+        color: $light-gray;
+        transition: color 0.15s ease;
+      }
+
+    }
+  }
+}
+
+/*
+   Theme toggle button (masthead)
+   ========================================================================== */
+
+.masthead__inner-wrap {
+  position: relative;
+}
+
+.masthead__menu {
+  padding-right: 2.75rem;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: -1.125rem;
+  padding: 0;
+  font-size: 1rem;
+  color: $masthead-link-color;
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.3s ease;
+
+  &:hover {
+    color: $link-color;
+    border-color: $link-color;
+    transform: rotate(-15deg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $link-color;
+    outline-offset: 2px;
+  }
+
+  .fa-sun { display: none; }
+}
+
+/*
+   Dark theme
+   ========================================================================== */
+
+$dk-bg: #16181c;
+$dk-surface: #1f2227;
+$dk-surface-2: #282c32;
+$dk-text: #d3d6db;
+$dk-heading: #eef0f2;
+$dk-muted: #9aa0a8;
+$dk-border: #30343b;
+$dk-link: #6cc6e0;
+$dk-link-hover: #a3dcec;
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: $dk-bg;
+
+  body {
+    color: $dk-text;
+    background-color: $dk-bg;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .page__title,
+  .author__name,
+  strong, b {
+    color: $dk-heading;
+  }
+
+  a {
+    color: $dk-link;
+
+    &:hover { color: $dk-link-hover; }
+  }
+
+  .page__content a {
+    text-decoration-color: rgba($dk-link, 0.45);
+
+    &:hover { text-decoration-color: currentColor; }
+  }
+
+  hr,
+  .page__content > h1 {
+    border-color: $dk-border;
+  }
+
+  .page__content > h1::after {
+    background: $dk-link;
+  }
+
+  blockquote {
+    border-left-color: $dk-border;
+  }
+
+  code, pre, .highlight,
+  a > code, li > code, figcaption > code, td > code {
+    color: $dk-text;
+    background: $dk-surface;
+  }
+
+  table { border-color: $dk-border; }
+  th { background-color: $dk-surface-2; }
+  td, th { border-color: $dk-border; }
+
+  // Masthead + navigation
+  .masthead {
+    background: rgba($dk-bg, 0.92);
+    border-bottom-color: $dk-border;
+  }
+
+  .greedy-nav {
+    background: transparent;
+
+    button { background-color: $dk-surface-2; }
+
+    a { color: $dk-muted; }
+    a:hover { color: $dk-heading; }
+
+    .visible-links a:before { background: $dk-link; }
+
+    .hidden-links {
+      background: $dk-surface;
+      border-color: $dk-border;
+
+      &:before { border-color: $dk-border transparent; }
+      &:after { border-color: $dk-surface transparent; }
+
+      a:hover { background: $dk-surface-2; }
+    }
+  }
+
+  .theme-toggle {
+    color: $dk-muted;
+    border-color: $dk-border;
+
+    &:hover {
+      color: #f5c451;
+      border-color: #f5c451;
+    }
+
+    .fa-moon { display: none; }
+    .fa-sun { display: inline-block; }
+  }
+
+  // Sidebar
+  .author__avatar img { border-color: $dk-border; }
+
+  .sidebar {
+    .author__name { color: $dk-heading; }
+    .author__pronouns { color: $dk-muted; border-color: $dk-border; }
+    .author__bio { color: $dk-text; }
+    .author__urls-wrapper { border-top-color: $dk-border; }
+    .author__urls li.author__desktop { color: $dk-muted; }
+    .author__urls a { color: $dk-text; }
+    .author__urls a:hover, .author__urls a:hover i { color: $dk-link; }
+    .author__urls i { color: $dk-muted; }
+  }
+
+  .author__urls {
+    background: $dk-surface;
+    border-color: $dk-border;
+
+    &:after { border-color: $dk-surface transparent; }
+
+    @include breakpoint($large) {
+      background: transparent;
+    }
+  }
+
+  .author__urls a,
+  .author__urls li {
+    color: $dk-text;
+  }
+
+  .author__urls-wrapper button {
+    color: $dk-text;
+    background: $dk-surface;
+    border-color: $dk-border;
+  }
+
+  .author__urls .fa-github,
+  .author__urls .fa-github-alt,
+  .author__urls .fa-github-square,
+  .fa-building-columns {
+    color: $dk-text;
+  }
+
+  // Archive + publications
+  .page__meta,
+  .archive__item-excerpt,
+  .pub-card__venue {
+    color: $dk-muted;
+  }
+
+  .archive__subtitle {
+    border-bottom-color: $dk-border;
+  }
+
+  .pub-btn {
+    color: $dk-text;
+    background-color: $dk-surface;
+    border-color: $dk-border;
+
+    i { color: $dk-link; }
+
+    &:hover,
+    &:focus-visible,
+    &[aria-expanded="true"] {
+      color: $dk-bg;
+      background-color: $dk-link;
+      border-color: $dk-link;
+      box-shadow: none;
+
+      i { color: $dk-bg; }
+    }
+
+    &.is-copied,
+    &.is-copied:hover {
+      color: $dk-bg;
+
+      i { color: $dk-bg; }
+    }
+  }
+
+  .pub-card__abstract {
+    background-color: $dk-surface;
+    border-left-color: $dk-link;
+  }
+
+  // News timeline
+  .news-list {
+    border-left-color: $dk-border;
+
+    li::before {
+      background: $dk-bg;
+      border-color: $dk-link;
+    }
+
+    li:first-child::before { background: $dk-link; }
+
+    li > strong:first-child { color: $dk-muted; }
+  }
+
+  // Footer
+  .page__footer {
+    color: $dk-muted;
+    background-color: $dk-surface;
+    border-top-color: $dk-border;
+
+    a { color: $dk-muted; }
+    a:hover { color: $dk-heading; }
+  }
+
+  .social-icons .fa,
+  .social-icons .fab,
+  .social-icons .fas {
+    color: $dk-text;
+  }
+
+  // Images with transparent backgrounds stay readable
+  .page__content img {
+    border-radius: 2px;
+  }
+}

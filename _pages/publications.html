@@ -23,7 +23,11 @@ author_profile: true
         <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
-      {% include archive-single.html %}
+      {% if post.bibtex or post.authors %}
+        {% include publication-card.html %}
+      {% else %}
+        {% include archive-single.html %}
+      {% endif %}
     {% endfor %}
   {% endfor %}
 {% else %}
@@ -32,5 +36,4 @@ author_profile: true
   {% endfor %}
 {% endif %}
 
-
-
+<script src="{{ base_path }}/assets/js/publications.js"></script>
