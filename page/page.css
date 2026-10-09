@@ -336,6 +336,8 @@ h3 { font-size: 19px; line-height: 1.3; }
 }
 .tldr .hx { width: 44px; height: 38px; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); background: var(--honey); display: grid; place-items: center; font-family: var(--mono); font-weight: 800; color: #1f1b12; font-size: 13px; }
 .tldr p { margin: 0; font-size: 17px; }
+.tldr .rq { margin: 0 0 12px; font-family: var(--mono); font-size: clamp(19px, 2.4vw, 23px); font-weight: 700; line-height: 1.35; letter-spacing: -.01em; color: var(--teal); }
+.tldr .rq span { background: linear-gradient(transparent 58%, var(--honey-soft) 58%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
 /* loop diagram */
 .loop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 36px; }
@@ -526,3 +528,4 @@ footer.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-betwe
 .win-banner .small { font-family: var(--mono); font-size: 14px; font-weight: 600; }
 .win-banner.out { transition: opacity .5s, transform .5s; opacity: 0; transform: translate(-50%, -60%) scale(.95); }
 @keyframes winpop { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } }
+.tldr p + p { margin-top: 12px; }
