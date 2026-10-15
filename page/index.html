@@ -75,9 +75,12 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <!-- ============ Paper header ============ -->
 <section class="paper-head" id="paper">
   <div class="wrap">
-    <div class="venue"><b>UIST ’26</b> Detroit, MI · November 2–5, 2026</div>
-    <h1>Generating Personalized Games with Sensing Data to Support Self-Reported Data Collection</h1>
-    <p class="sub"><b class="acr">P</b>ersonalized <b class="acr">A</b>daptive <b class="acr">G</b>ames for <b class="acr">E</b>ngagement (PAGE) is a framework for turning a participant’s own sensing data and self-reports into personalized game content. Play is voluntary, and the game itself becomes a channel for richer data. Our first case study is an LLM-generated daily word puzzle.</p>
+    <div class="venue-row">
+      <a class="venue-logo" href="https://uist.acm.org/2026/" target="_blank" rel="noopener"><img src="{{ '/images/uist_logo.png' | relative_url }}" alt="UIST 2026, Detroit" width="1294" height="290"></a>
+      <div class="venue"><b>UIST ’26</b> Detroit, MI · November 2–5, 2026</div>
+    </div>
+    <h1>Generating Personalized Games with Sensing Data to Support <span class="nowrap">Self-Reported</span> Data Collection</h1>
+    <p class="sub"><b class="acr">P</b>ersonalized <b class="acr">A</b>daptive <b class="acr">G</b>ames for <b class="acr">E</b>ngagement <b class="acr">(PAGE)</b> is a framework for turning a participant’s own sensing data and self-reports into personalized game content. <mark class="hl">As participants share more detail about themselves, the games become more interesting, and the games in turn become an additional channel for data collection.</mark> We test this idea with LLM-generated daily word puzzles. In the long term, we aim to use this approach to get many people to <mark class="hl">self-report voluntarily over long periods of time (without relying on financial compensation)</mark>, unlocking large-scale, longitudinal health and behavioral data.</p>
     <p class="authors">
       <a class="me" href="{{ '/' | relative_url }}">Jin-seo Kim</a>
       <a href="https://hvrlxy.github.io/" target="_blank" rel="noopener">Ha Le</a>
@@ -96,9 +99,10 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
     <div class="tldr">
       <div class="hx">TL;DR</div>
       <div>
-        <p class="rq"><span>How do we get people to keep self-reporting, voluntarily, for years?</span></p>
-        <p>Large longitudinal studies such as the NIH <i>All of Us</i> Research Program follow participants for years. Sensors can log where people go and how they move, but understanding what they were doing and why still requires <b>self-reports collected again and again</b>, not one-off surveys. Payments and points-and-badges gamification don’t make reporting itself more interesting, and paying people to stay engaged for years doesn’t scale.</p>
-        <p><b>PAGE</b> is a framework that builds the game out of the participant’s own data, creating a <b>self-reinforcing feedback loop</b>: more detailed self-reports make the game more personal and more interesting, which encourages people to share more detail. In our case study, an LLM turns the previous day’s smartwatch µEMA self-reports and sensor data into <b>personalized clues</b> for a word-wheel puzzle, and answering a quick question unlocks each clue. In a 2-week feasibility study (N=15), participants were paid for µEMA but <b>not for playing</b>. Playing was completely voluntary. Even so, <b>80%</b> preferred the puzzle week, self-reports became <b>richer</b>, and participants answered <b>1,188 additional questions</b> during gameplay.</p>
+        <p class="rq"><span>How do we get people to provide voluntary, rich self-reports?</span></p>
+        <p>Large longitudinal studies such as the NIH <a href="https://www.joinallofus.org/" target="_blank" rel="noopener"><i>All of Us</i> Research Program</a> follow participants for years. Sensors can passively log where people go and how they move, but <i>understanding and verifying</i> what they were doing and why still requires <b>repeated self-reports</b>. Over time, participants tire of answering questions, and paying them to stay engaged doesn’t scale to studies of this size.</p>
+        <p class="ask">So we asked: <mark class="hl">can we combine self-reporting with games people already enjoy and play voluntarily, and personalize those games with the information participants provide?</mark></p>
+        <p>We developed <b>PAGE</b>, a framework that builds the game out of the participant’s own data, creating a <b>self-reinforcing feedback loop</b>: more detailed self-reports make the game more personal and interesting, which encourages people to share more. In our case study, an LLM turns the previous day’s smartwatch µEMA self-reports and sensor data into <b>personalized clues</b> for a word-wheel puzzle. In a 2-week feasibility study (N=15), <b>80%</b> of participants preferred the puzzle week, self-reports became <b>richer</b>, and participants voluntarily answered <b>1,188 additional questions</b> to unlock clues.</p>
       </div>
     </div>
   </div>
@@ -109,12 +113,30 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   <div class="wrap">
     <div class="eyebrow">The big picture</div>
     <h2>Studies that last for years need<br>self-reports that last for years</h2>
-    <p class="intro">Programs like the NIH <i>All of Us</i> Research Program aim to follow a million or more people over many years. Their value comes from repeated, long-term measurement. Passive sensing covers part of that, but much of what researchers need to know (what someone was doing, with whom, and how it felt) has to come from the participants themselves, again and again. The open question is how to keep people doing this willingly, long after the novelty wears off.</p>
+    <p class="intro">Large-scale health studies like the NIH <a href="https://www.joinallofus.org/" target="_blank" rel="noopener"><i>All of Us</i> Research Program</a> aim to follow a million or more people for years. Sensors in phones and wearables can passively track people’s states and activities, but researchers still need <mark class="hl">self-reports</mark> to verify that data, understand what people were doing, and capture states that sensors can’t infer, such as loneliness or happiness. That usually means asking participants the same questions over and over. The problem is, <mark class="hl">people get tired of answering them</mark>.</p>
 
-    <div class="modules">
-      <div class="module"><div class="ico">📅</div><h3>Years, not weeks</h3><p>Survey fatigue builds over time, and answers get shorter and less frequent. Long-term engagement has to be sustainable, not a short-term boost.</p></div>
-      <div class="module"><div class="ico">🗣️</div><h3>Self-report, not just sensing</h3><p>Sensors capture steps and locations. Context, meaning, and experience come from people telling us, over and over, not from a one-off survey.</p></div>
-      <div class="module"><div class="ico">🤝</div><h3>Voluntary, not paid</h3><p>Paying people to stay engaged for years is expensive and hard to scale. The experience itself needs to be worth coming back to.</p></div>
+    <div class="contrast">
+      <figure class="scene">
+        <div class="art"><img src="{{ '/images/engaged.png' | relative_url }}" alt="A cheerful participant eagerly answering a prompt on their smartwatch and phone" width="402" height="302" loading="lazy"></div>
+        <figcaption>
+          <span class="tag good">At first</span>
+          <h3>“Happy to help science!”</h3>
+          <p>Even the most dedicated participants, committed to helping science…</p>
+        </figcaption>
+      </figure>
+      <div class="shift" aria-hidden="true"><span>→</span></div>
+      <figure class="scene">
+        <div class="art"><img src="{{ '/images/fatigued.png' | relative_url }}" alt="The same participant, now tired, sighing as their smartwatch buzzes with another prompt" width="419" height="314" loading="lazy"></div>
+        <figcaption>
+          <span class="tag bad">Over time</span>
+          <h3>“Another prompt?”</h3>
+          <p>…get tired of repeated surveys and lose interest.</p>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="takeaway">
+      <p>Researchers can pay participants to stay engaged, but that doesn’t scale well for large longitudinal studies. Instead, we need ways to tap into participants’ intrinsic motivation, so that <mark class="hl">large numbers of people keep self-reporting voluntarily, for long periods of time</mark>.</p>
     </div>
   </div>
 </section>
@@ -123,42 +145,52 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <section class="block alt" id="idea">
   <div class="wrap">
     <div class="eyebrow">The idea</div>
-    <h2>Your data becomes the game.<br>The game collects more data.</h2>
+    <h2>Your data becomes the game.<br>More detail makes it more interesting.</h2>
     <p class="intro">Most gamified surveys add rewards on top of the same survey. PAGE builds the game out of the data being collected, which creates a self-reinforcing feedback loop: richer self-reports make the game more personal and more interesting, and a more interesting game gives people a reason to share more. In our study, some participants started adding more detail to their reports on purpose, to see how it would show up in the next day’s clues. Because play is voluntary, the loop runs on interest rather than payment.</p>
 
-    <div class="loop-grid">
-      <div class="loop" aria-hidden="true">
-        <svg viewBox="0 0 460 430">
-          <defs>
-            <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--honey-2)"/></marker>
-            <marker id="at" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--teal)"/></marker>
-          </defs>
-          <path class="arc h" d="M300 70 Q 415 120 405 270" marker-end="url(#ah)"/>
-          <path class="arc h" d="M340 372 Q 230 425 120 372" marker-end="url(#ah)"/>
-          <path class="arc t" d="M55 270 Q 45 120 160 70" marker-end="url(#at)"/>
-          <polygon class="core" points="200,168 260,168 290,220 260,272 200,272 170,220"/>
-          <text class="core-t" x="230" y="227" text-anchor="middle">PAGE</text>
-          <g class="node"><rect x="150" y="30" width="160" height="56" rx="12"/><text x="230" y="54" text-anchor="middle">You, yesterday</text><text class="s" x="230" y="72" text-anchor="middle">µEMA + sensing</text></g>
-          <g class="node"><rect x="320" y="290" width="130" height="56" rx="12"/><text x="385" y="314" text-anchor="middle">Your puzzle</text><text class="s" x="385" y="332" text-anchor="middle">personal clues</text></g>
-          <g class="node"><rect x="10" y="290" width="130" height="56" rx="12"/><text x="75" y="314" text-anchor="middle">Richer data</text><text class="s" x="75" y="332" text-anchor="middle">unlock questions</text></g>
-          <text x="430" y="170" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="end">LLM writes clues</text>
-          <text x="230" y="420" font-family="var(--mono)" font-size="11" fill="var(--muted)" text-anchor="middle">play → answer to unlock</text>
-          <text x="30" y="170" font-family="var(--mono)" font-size="11" fill="var(--muted)">more detail</text>
-        </svg>
+    <div class="lp">
+      <svg class="lp-arcs" viewBox="0 0 860 450" aria-hidden="true">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--honey-2)"/></marker>
+          <marker id="at" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--teal)"/></marker>
+        </defs>
+        <path class="arc h" d="M300 120 Q 430 10 560 120" marker-end="url(#ah)"/>
+        <path class="arc t" d="M560 325 Q 430 435 300 325" marker-end="url(#at)"/>
+        <polygon class="core" points="408,182 452,182 474,220 452,258 408,258 386,220"/>
+        <text class="core-t" x="430" y="227" text-anchor="middle">PAGE</text>
+      </svg>
+      <figure class="scene lp-card lp-data">
+        <div class="art"><img src="{{ '/images/self_reporting.png' | relative_url }}" alt="A participant answering a quick self-report on their phone over coffee" width="263" height="223" loading="lazy"></div>
+        <figcaption>
+          <span class="tag data">1 · Self-report</span>
+          <h3>Your day</h3>
+          <p>µEMA answers + phone and watch sensing</p>
+        </figcaption>
+      </figure>
+      <div class="lp-label lp-top">LLM writes personal clues</div>
+      <figure class="scene lp-card lp-game">
+        <div class="art"><img src="{{ '/images/playing_games.png' | relative_url }}" alt="The same participant happily playing a word puzzle on their phone" width="239" height="213" loading="lazy"></div>
+        <figcaption>
+          <span class="tag game">2 · Play</span>
+          <h3>Your puzzle</h3>
+          <p>Clues written from your own day</p>
+        </figcaption>
+      </figure>
+      <div class="lp-label lp-bot">Answer questions to unlock clues: richer self-reports</div>
+    </div>
+
+    <div class="compare">
+      <div class="row">
+        <div class="lbl">Classic EMA</div>
+        <p>A buzz every 15 minutes: “What are you doing?” The same question over and over, and answers get shorter as the weeks go by.</p>
       </div>
-      <div class="compare">
-        <div class="row">
-          <div class="lbl">Classic EMA</div>
-          <p>A buzz every 15 minutes: “What are you doing?” The same question over and over, and answers get shorter as the weeks go by.</p>
-        </div>
-        <div class="row">
-          <div class="lbl">Gamified EMA</div>
-          <p>Points, badges, and leaderboards are added on top. They can improve compliance, but the game has nothing to do with what you reported.</p>
-        </div>
-        <div class="row new">
-          <div class="lbl">PAGE</div>
-          <p>The game is made from your own day. Yesterday’s “calling my friend on the train” becomes today’s clue: <i>“You were ____ing your friend on your way home.”</i> Answering a question to unlock that hint gives researchers more data.</p>
-        </div>
+      <div class="row">
+        <div class="lbl">Gamified EMA</div>
+        <p>Points, badges, and leaderboards are added on top. They can improve compliance, but the game has nothing to do with what you reported.</p>
+      </div>
+      <div class="row new">
+        <div class="lbl">PAGE</div>
+        <p>The game is made from your own day. Yesterday’s “calling my friend on the train” becomes today’s clue: <i>“You were ____ing your friend on your way home.”</i> Answering a question to unlock that hint gives researchers more data.</p>
       </div>
     </div>
 
