@@ -641,6 +641,73 @@
   }
 
   /* ------------------------------------------------------------------
+     Loop diagram: self-report bubble and sensing cloud, then yesterday's
+     data turns into clues on the middle card, then the clue is typed out
+     on the phone with its goal word. The active card stays in focus and a
+     three-part progress bar tracks the phase. Replays while on screen.
+     ------------------------------------------------------------------ */
+  var loop = $('.lp'), say = $('#lp-say'), think = $('#lp-think'), clue = $('#lp-clue'), pz = $('#lp-pz');
+  if (loop && say && think && clue && pz) {
+    var clueT = $('.clue-t', clue), goal = $('.goal', clue), clueText = clueT.getAttribute('data-text');
+    var bars = $$('.lp-progress li'), cards = $$('.lp-card');
+    var PHASES = [['data', 9000], ['llm', 9000], ['game', 15600]];
+    var timers = [];
+    var later = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
+    var setBar = function (li, full, ms) {
+      var fill = $('i', li);
+      fill.style.transition = full ? 'width ' + ms + 'ms linear' : 'none';
+      fill.style.width = full ? '100%' : '0';
+    };
+    var resetLoop = function () {
+      timers.forEach(clearTimeout); timers = [];
+      [say, think, clue, goal].forEach(function (n) { n.classList.remove('show'); });
+      pz.classList.remove('run');
+      cards.forEach(function (c) { c.classList.remove('on'); });
+      bars.forEach(function (li) { li.classList.remove('on'); setBar(li, false); });
+      loop.removeAttribute('data-phase');
+    };
+    var phase = function (i) {
+      loop.setAttribute('data-phase', PHASES[i][0]);
+      bars.forEach(function (li, j) { li.classList.toggle('on', j === i); });
+      cards.forEach(function (c, j) { c.classList.toggle('on', j === i); });
+      bars[i].offsetWidth; // flush so the fill animates from 0
+      setBar(bars[i], true, PHASES[i][1]);
+    };
+    var typeClue = function () {
+      clue.classList.add('show');
+      clueT.textContent = '';
+      var node = document.createTextNode(''), cursor = el('span', 'cursor'), rest = el('span', 'rest'), i = 0;
+      clueT.appendChild(node); clueT.appendChild(cursor); clueT.appendChild(rest);
+      (function step() {
+        node.nodeValue = clueText.slice(0, ++i);
+        rest.textContent = clueText.slice(i);
+        if (i < clueText.length) return later(step, 38);
+        later(function () { cursor.remove(); goal.classList.add('show'); }, 900);
+      })();
+    };
+    var playLoop = function () {
+      resetLoop();
+      var t1 = PHASES[0][1], t2 = t1 + PHASES[1][1], t3 = t2 + PHASES[2][1];
+      later(function () { phase(0); }, 50);
+      later(function () { say.classList.add('show'); }, 900);
+      later(function () { think.classList.add('show'); }, 3600);
+      later(function () { phase(1); pz.classList.add('run'); }, t1);
+      later(function () { phase(2); typeClue(); }, t2);
+      later(function () { [say, think, clue].forEach(function (n) { n.classList.remove('show'); }); pz.classList.remove('run'); }, t3);
+      later(playLoop, t3 + 2100);
+    };
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      clueT.textContent = clueText;
+      [say, think, clue, goal].forEach(function (n) { n.classList.add('show'); });
+      pz.classList.add('run');
+    } else {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) playLoop(); else resetLoop();
+      }, { threshold: 0.2 }).observe(loop);
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Copy BibTeX
      ------------------------------------------------------------------ */
   $$('[data-copy]').forEach(function (b) {

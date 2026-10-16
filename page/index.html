@@ -145,60 +145,64 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <section class="block alt" id="idea">
   <div class="wrap">
     <div class="eyebrow">The idea</div>
-    <h2>Your data becomes the game.<br>More detail makes it more interesting.</h2>
-    <p class="intro">Most gamified surveys add rewards on top of the same survey. PAGE builds the game out of the data being collected, which creates a self-reinforcing feedback loop: richer self-reports make the game more personal and more interesting, and a more interesting game gives people a reason to share more. In our study, some participants started adding more detail to their reports on purpose, to see how it would show up in the next day’s clues. Because play is voluntary, the loop runs on interest rather than payment.</p>
+    <h2>Answer questions for science.<br>Enjoy your favorite games, about yourself.</h2>
+    <p class="intro">The PAGE framework consists of three modules: (1) the <mark class="mod data">data collection module</mark> collects individuals’ self-reports and passive sensing data, (2) the <mark class="mod llm">personalization module</mark> aggregates the collected data and uses it to tailor game components, and (3) the <mark class="mod game">game module</mark> delivers the personalized game, which is then enjoyed by participants.</p>
 
     <div class="lp">
-      <svg class="lp-arcs" viewBox="0 0 860 450" aria-hidden="true">
-        <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--honey-2)"/></marker>
-          <marker id="at" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--teal)"/></marker>
-        </defs>
-        <path class="arc h" d="M300 120 Q 430 10 560 120" marker-end="url(#ah)"/>
-        <path class="arc t" d="M560 325 Q 430 435 300 325" marker-end="url(#at)"/>
-        <polygon class="core" points="408,182 452,182 474,220 452,258 408,258 386,220"/>
-        <text class="core-t" x="430" y="227" text-anchor="middle">PAGE</text>
-      </svg>
       <figure class="scene lp-card lp-data">
-        <div class="art"><img src="{{ '/images/self_reporting.png' | relative_url }}" alt="A participant answering a quick self-report on their phone over coffee" width="263" height="223" loading="lazy"></div>
+        <div class="art"><img src="{{ '/images/self_reporting.png' | relative_url }}" alt="A participant answering a quick self-report on their phone over coffee" width="263" height="223" loading="lazy">
+          <div class="bubble say" id="lp-say">I’m studying at a cafe</div>
+          <div class="think" id="lp-think" aria-label="Passive sensing: location, step counts, and more">
+            <span class="dot d1"></span><span class="dot d2"></span>
+            <div class="cloud">
+              <svg viewBox="0 0 200 130" preserveAspectRatio="none" aria-hidden="true"><path d="M40,112 a24,24 0 0 1 -12,-46 a30,30 0 0 1 42,-40 a34,34 0 0 1 58,-6 a28,28 0 0 1 44,26 a24,24 0 0 1 2,50 a26,26 0 0 1 -40,14 a32,32 0 0 1 -52,4 a24,24 0 0 1 -42,-2 z"/></svg>
+              <span>Location<br>Step counts<br>…</span>
+            </div>
+          </div>
+        </div>
         <figcaption>
-          <span class="tag data">1 · Self-report</span>
-          <h3>Your day</h3>
-          <p>µEMA answers + phone and watch sensing</p>
+          <span class="tag data">1 · Data collection module</span>
+          <p>Participants provide self-reports and passive sensor data from their mobile and wearable devices</p>
         </figcaption>
       </figure>
-      <div class="lp-label lp-top">LLM writes personal clues</div>
+      <svg class="lp-step t" viewBox="0 0 80 20" aria-hidden="true"><path class="arc" d="M6 10 H64"/><path class="head" d="M62 3 L76 10 L62 17 z"/></svg>
+      <figure class="scene lp-card lp-llm">
+        <div class="art pz" id="lp-pz">
+          <div class="pz-h" style="--d:0s">Yesterday’s data</div>
+          <div class="pz-row">
+            <span class="pz-chip data" style="--d:.4s">📍 Cafe, 2–4 pm</span>
+            <span class="pz-chip data" style="--d:.8s">💬 “studying at a cafe”</span>
+          </div>
+          <div class="pz-arrow" style="--d:1.6s" aria-hidden="true">↓ <small>LLM</small></div>
+          <div class="pz-word" style="--d:2.4s"><small>Puzzle word</small> <b>COFFEE</b></div>
+          <div class="pz-why" style="--d:3.4s">↳ The person was studying at a cafe</div>
+          <div class="pz-chip game pz-clue" style="--d:4.4s">“You enjoyed a warm ____ while studying yesterday.”</div>
+        </div>
+        <figcaption>
+          <span class="tag llm">2 · Personalization module</span>
+          <p>An LLM turns yesterday’s data into personalized puzzle clues</p>
+        </figcaption>
+      </figure>
+      <svg class="lp-step g" viewBox="0 0 80 20" aria-hidden="true"><path class="arc" d="M6 10 H64"/><path class="head" d="M62 3 L76 10 L62 17 z"/></svg>
       <figure class="scene lp-card lp-game">
-        <div class="art"><img src="{{ '/images/playing_games.png' | relative_url }}" alt="The same participant happily playing a word puzzle on their phone" width="239" height="213" loading="lazy"></div>
+        <div class="art"><img src="{{ '/images/playing_games.png' | relative_url }}" alt="The same participant happily playing a word puzzle on their phone" width="239" height="213" loading="lazy">
+          <div class="bubble clue" id="lp-clue">
+            <span class="sr-only">Clue: You enjoyed a warm ____ while studying yesterday. Goal word: COFFEE.</span>
+            <span class="clue-t" aria-hidden="true" data-text="You enjoyed a warm ____ while studying yesterday."></span>
+            <span class="goal" aria-hidden="true">(COFFEE)</span>
+          </div>
+        </div>
         <figcaption>
-          <span class="tag game">2 · Play</span>
-          <h3>Your puzzle</h3>
-          <p>Clues written from your own day</p>
+          <span class="tag game">3 · Game module</span>
+          <p>Participants enjoy word puzzles with clues personalized based on their own data</p>
         </figcaption>
       </figure>
-      <div class="lp-label lp-bot">Answer questions to unlock clues: richer self-reports</div>
     </div>
-
-    <div class="compare">
-      <div class="row">
-        <div class="lbl">Classic EMA</div>
-        <p>A buzz every 15 minutes: “What are you doing?” The same question over and over, and answers get shorter as the weeks go by.</p>
-      </div>
-      <div class="row">
-        <div class="lbl">Gamified EMA</div>
-        <p>Points, badges, and leaderboards are added on top. They can improve compliance, but the game has nothing to do with what you reported.</p>
-      </div>
-      <div class="row new">
-        <div class="lbl">PAGE</div>
-        <p>The game is made from your own day. Yesterday’s “calling my friend on the train” becomes today’s clue: <i>“You were ____ing your friend on your way home.”</i> Answering a question to unlock that hint gives researchers more data.</p>
-      </div>
-    </div>
-
-    <div class="modules">
-      <div class="module"><div class="ico">🧩</div><h3>Game module</h3><p>A game people already enjoy playing regularly. Our case study uses a Spelling-Bee-style word wheel: seven letters, and every word must include the center letter.</p></div>
-      <div class="module"><div class="ico">⌚</div><h3>Data collection module</h3><p>Multimodal µEMA on a smartwatch (answer by tap or voice) every 15 minutes, plus passive phone and watch sensing: GPS, steps, heart rate, and more.</p></div>
-      <div class="module"><div class="ico">✨</div><h3>Personalization module</h3><p>A generative model turns the data into game content. Here, a local LLM (Gemma 3, 27B) turns yesterday’s data into a diary and writes a personalized fill-in-the-blank clue for each puzzle word.</p></div>
-    </div>
+    <ol class="lp-progress" aria-hidden="true">
+      <li class="data"><span class="track"><i></i></span>1 · Data collection</li>
+      <li class="llm"><span class="track"><i></i></span>2 · Personalization</li>
+      <li class="game"><span class="track"><i></i></span>3 · Gameplay</li>
+    </ol>
   </div>
 </section>
 

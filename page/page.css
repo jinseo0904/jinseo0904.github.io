@@ -17,6 +17,8 @@
   --teal: #1f8fae;
   --teal-soft: #dff1f6;
   --good: #3f9c5a;
+  --green: #2e8b4e;
+  --green-soft: #dcf1e2;
   --bad: #c9533e;
   --shadow: 0 1px 2px rgba(60, 45, 10, .06), 0 8px 24px rgba(60, 45, 10, .06);
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -30,7 +32,7 @@
   :root:not([data-theme="light"]) {
     --bg: #13120e; --bg-2: #1a1813; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
     --muted: #a0977f; --border: #33302766; --hex: #2d2a22; --hex-hover: #38342a;
-    --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a;
+    --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a; --green: #6ccf8c; --green-soft: #16301f;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     color-scheme: dark;
   }
@@ -38,7 +40,7 @@
 :root[data-theme="dark"] {
   --bg: #13120e; --bg-2: #1a1813; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
   --muted: #a0977f; --border: #33302766; --hex: #2d2a22; --hex-hover: #38342a;
-  --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a;
+  --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a; --green: #6ccf8c; --green-soft: #16301f;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
   color-scheme: dark;
 }
@@ -345,48 +347,145 @@ mark.hl { background: linear-gradient(transparent 55%, var(--honey-soft) 55%); c
 .tldr .rq { margin: 0 0 12px; font-family: var(--mono); font-size: clamp(19px, 2.4vw, 23px); font-weight: 700; line-height: 1.35; letter-spacing: -.01em; color: var(--teal); }
 .tldr .rq span { background: linear-gradient(transparent 58%, var(--honey-soft) 58%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
-/* loop diagram: self-report -> PAGE -> play -> back */
-.lp { position: relative; max-width: 860px; margin: 40px auto 0; aspect-ratio: 860 / 450; container-type: inline-size; }
-.lp-arcs { position: absolute; inset: 0; width: 100%; height: 100%; }
-.lp-arcs .arc { fill: none; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 6 9; animation: flow 1.4s linear infinite; }
-.lp-arcs .arc.h { stroke: var(--honey-2); }
-.lp-arcs .arc.t { stroke: var(--teal); }
-.lp-arcs .core { fill: var(--honey); }
-.lp-arcs .core-t { fill: #1f1b12; font-family: var(--mono); font-weight: 800; font-size: 20px; }
+/* module names in the idea intro, colored to match the loop */
+mark.mod { padding: 0 .15em; border-radius: 3px; font-weight: 600; color: var(--ink); background: linear-gradient(transparent 50%, var(--hl) 50%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+mark.mod.data { --hl: var(--teal-soft); }
+mark.mod.llm { --hl: var(--green-soft); }
+mark.mod.game { --hl: var(--honey-soft); }
+/* loop diagram: data collection -> personalization -> game */
+.lp {
+  max-width: 980px; margin: 40px auto 0; padding-top: 3cqw; container-type: inline-size;
+  display: grid; grid-template-columns: 1fr 8cqw 1fr 8cqw 1fr; grid-template-rows: auto auto 1fr;
+}
+.lp .arc { fill: none; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 6 9; animation: flow 4.2s linear infinite; transition: stroke-width .3s ease; }
 @keyframes flow { to { stroke-dashoffset: -30; } }
-@media (prefers-reduced-motion: reduce) { .lp-arcs .arc { animation: none; } }
-.lp-card { position: absolute; top: 9%; width: 30%; border-radius: 16px; }
-.lp-data { left: 2%; }
-.lp-game { right: 2%; }
-.lp-card figcaption { padding: 1.6cqw 2cqw 2cqw; }
-.lp-card h3 { margin: 0.9cqw 0 0.2cqw; font-size: 2cqw; }
-.lp-card p { font-size: 1.6cqw; }
-.lp-card .tag { font-size: 1.35cqw; }
+@media (prefers-reduced-motion: reduce) { .lp .arc { animation: none; } .lp-progress { display: none; } }
+.lp-step { grid-row: 1; align-self: start; width: 100%; margin-top: 10cqw; overflow: visible; }
+.lp-data { grid-column: 1; }
+.lp-step.t { grid-column: 2; }
+.lp-llm { grid-column: 3; }
+.lp-step.g { grid-column: 4; }
+.lp-game { grid-column: 5; }
+.lp-step.t .arc { stroke: var(--teal); }
+.lp-step.t .head { fill: var(--teal); }
+.lp-step.g .arc { stroke: var(--green); }
+.lp-step.g .head { fill: var(--green); }
+.lp[data-phase="llm"] .lp-step.t .arc, .lp[data-phase="game"] .lp-step.g .arc { stroke-width: 5; }
+/* cards share rows (art | tag | text) so rules and text line up across all three */
+.lp-card { grid-row: span 3; display: grid; grid-template-rows: subgrid; border-radius: 16px; }
+.lp-card figcaption { display: contents; }
+.scene.lp-card .tag { justify-self: start; align-self: start; margin: 1.6cqw 1.8cqw 0; }
+.lp-card .art { height: 21cqw; }
+.scene.lp-card .art img { height: 100%; aspect-ratio: auto; }
+.lp-card p { font-size: 1.5cqw; }
+.scene.lp-card .tag { font-size: 1.7cqw; line-height: 1.35; letter-spacing: 0; text-transform: none; }
+.lp-card .tag + p { margin: .9cqw 1.8cqw 1.8cqw; }
 .scene .tag.data { background: var(--teal-soft); color: var(--teal); }
 .scene .tag.game { background: var(--honey-soft); color: var(--honey-2); }
-.lp-label { position: absolute; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: 1.55cqw; font-weight: 600; color: var(--muted); white-space: nowrap; }
-.lp-top { top: 0; color: var(--honey-2); }
-.lp-bot { bottom: 0; color: var(--teal); }
-@media (max-width: 640px) {
-  .lp { aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .lp-arcs { display: none; }
-  .lp-card { position: static; width: min(300px, 100%); }
-  .lp-card figcaption { padding: 14px 18px 18px; }
-  .lp-card h3 { margin: 8px 0 2px; font-size: 17px; }
-  .lp-card p { font-size: 14px; }
-  .lp-card .tag { font-size: 12px; }
-  .lp-label { position: static; transform: none; font-size: 13px; white-space: normal; text-align: center; }
-  .lp-top::before { content: "↓ "; }
-  .lp-bot::before { content: "↺ "; }
+.scene .tag.llm { background: var(--green-soft); color: var(--green); }
+/* middle card: yesterday's data turns into puzzle clues */
+.lp-card .pz { min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .45cqw; padding: 1cqw; text-align: center; }
+.pz > *, .pz-chip { opacity: 0; transform: translateY(.6cqw); transition: opacity .5s ease, transform .5s ease; }
+.pz.run > *, .pz.run .pz-chip { opacity: 1; transform: none; transition-delay: var(--d, 0s); }
+.pz-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .45cqw; }
+.pz.run .pz-row { transition-delay: 0s; }
+.pz-h { font-family: var(--mono); font-size: 1.05cqw; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.pz-chip { padding: .25cqw .65cqw; border-radius: .7cqw; font-size: 1.15cqw; font-weight: 500; line-height: 1.35; color: var(--ink); white-space: nowrap; }
+.pz-chip.data { background: var(--teal-soft); }
+.pz-chip.game { background: var(--honey-soft); }
+.pz-chip b { color: color-mix(in srgb, var(--honey-2) 78%, var(--ink)); font-family: var(--mono); letter-spacing: .04em; }
+.pz-word { font-size: 1.15cqw; color: var(--muted); }
+.pz-word small { font-family: var(--mono); font-size: .9em; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.pz-word b { margin-left: .3cqw; padding: .15cqw .6cqw; border-radius: .6cqw; background: var(--honey-soft); color: color-mix(in srgb, var(--honey-2) 78%, var(--ink)); font-family: var(--mono); font-size: 1.3cqw; letter-spacing: .06em; }
+.pz-why { font-size: 1.1cqw; font-style: italic; color: var(--ink-2); }
+.pz-chip.pz-clue { white-space: normal; max-width: 92%; font-weight: 600; }
+.pz-arrow { font-size: 1.8cqw; font-weight: 700; line-height: 1; color: var(--green); }
+.pz-arrow small { font-family: var(--mono); font-size: .6em; letter-spacing: .06em; }
+/* focus: while the loop plays, the cards that aren't active fade back */
+.lp-card { transition: opacity .6s ease; }
+.lp[data-phase] .lp-card:not(.on) { opacity: .35; }
+/* sequenced speech bubbles: self-report -> clue typed out on the phone -> goal word */
+.scene.lp-card { overflow: visible; }
+.lp-card .art, .lp-card .art img { border-radius: 16px 16px 0 0; }
+.lp-card .art { position: relative; }
+.lp-data .art { z-index: 2; }
+.bubble {
+  position: absolute; z-index: 2; padding: .9cqw 1.3cqw; border-radius: 1.6cqw;
+  background: var(--card); border: 2px solid var(--bc); box-shadow: var(--shadow);
+  font-family: var(--sans); font-size: 1.4cqw; line-height: 1.3; font-weight: 700; color: var(--ink); text-align: center;
+  opacity: 0; transform: scale(.6); transition: opacity .3s ease, transform .45s cubic-bezier(.34, 1.56, .64, 1);
 }
-
-.compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 44px; }
-@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
-.compare .row { padding: 16px 18px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); }
-.compare .row.new { border-color: var(--honey-2); box-shadow: 0 0 0 3px var(--honey-soft); }
-.compare .lbl { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.compare .row.new .lbl { color: var(--honey-2); }
-.compare p { margin: 4px 0 0; font-size: 15.5px; color: var(--ink-2); }
+.bubble.show { opacity: 1; transform: none; }
+.bubble::after {
+  content: ""; position: absolute; width: 1.6cqw; height: 1.6cqw;
+  background: var(--card); border: solid var(--bc); transform: rotate(45deg);
+}
+/* says: right of the face, tail pointing left at the mouth */
+.bubble.say { top: -7%; left: 66%; width: 50%; --bc: var(--teal); transform-origin: 0 70%; }
+.bubble.say::after { left: -.9cqw; top: 55%; border-width: 0 0 2px 2px; }
+/* clue: left of the face, tail pointing down at the phone */
+.bubble.clue { top: -9%; left: -22%; width: 58%; --bc: var(--honey-2); transform-origin: 75% 120%; }
+.bubble.clue::after { left: 76%; bottom: -.9cqw; border-width: 0 2px 2px 0; }
+.bubble .clue-t { display: block; }
+.bubble .clue-t .rest { visibility: hidden; }
+.bubble .cursor { display: inline-block; width: 2px; height: 1em; margin-right: -2px; background: var(--honey-2); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+.bubble .goal {
+  display: block; margin-top: .3cqw; color: color-mix(in srgb, var(--honey-2) 78%, var(--ink)); font-weight: 800; letter-spacing: .04em;
+  opacity: 0; transform: translateY(4px); transition: opacity .4s ease, transform .4s ease;
+}
+.bubble .goal.show { opacity: 1; transform: none; }
+/* thought cloud: what the phone and watch sense on their own */
+.think { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.think .dot, .think .cloud { position: absolute; opacity: 0; transform: scale(.4); transition: opacity .3s ease, transform .4s cubic-bezier(.34, 1.56, .64, 1); }
+.think .dot { border: 2px solid var(--teal); border-radius: 50%; background: var(--card); }
+.think .d1 { left: 52%; top: 50%; width: 1.1cqw; height: 1.1cqw; }
+.think .d2 { left: 55%; top: 55%; width: 1.7cqw; height: 1.7cqw; transition-delay: .15s; }
+.think .cloud {
+  left: 53%; top: 60%; width: 48%; aspect-ratio: 200 / 130; display: grid; place-items: center; transition-delay: .3s;
+  font-family: var(--sans); font-size: 1.2cqw; line-height: 1.3; font-weight: 500; color: var(--ink); text-align: center;
+}
+.think .cloud svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 4px 10px rgba(60, 45, 10, .08)); }
+.think .cloud path { fill: var(--card); stroke: var(--teal); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.think .cloud span { position: relative; }
+.think.show .dot, .think.show .cloud { opacity: 1; transform: none; }
+/* progress: which part of the loop is playing */
+.lp-progress { display: flex; gap: 10px; max-width: 520px; margin: 28px auto 0; padding: 0; list-style: none; }
+.lp-progress li { flex: 1; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); text-align: center; transition: color .3s ease; }
+.lp-progress .track { display: block; height: 5px; margin-bottom: 7px; border-radius: 99px; background: var(--border); overflow: hidden; }
+.lp-progress i { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--c); }
+.lp-progress .data { --c: var(--teal); }
+.lp-progress .llm { --c: var(--green); }
+.lp-progress .game { --c: var(--honey-2); }
+.lp-progress li.on { color: var(--c); }
+@media (max-width: 640px) {
+  .lp { display: flex; flex-direction: column; align-items: center; padding-top: 16px; overflow-x: clip; }
+  .lp-card { width: min(260px, 74%); }
+  .lp-card { display: block; }
+  .lp-card .art { height: auto; aspect-ratio: 4 / 3; }
+  .scene.lp-card .tag { display: inline-block; margin: 14px 18px 0; }
+  .lp-card p { font-size: 14px; }
+  .scene.lp-card .tag { font-size: 14.5px; }
+  .lp-card .tag + p { margin: 8px 18px 18px; }
+  .lp-step { align-self: center; width: 44px; margin: 16px 0; transform: rotate(90deg); }
+  .bubble { font-size: 13px; padding: 6px 9px; border-radius: 12px; }
+  .bubble::after { width: 12px; height: 12px; }
+  .bubble.say::after { left: -7px; }
+  .bubble.clue::after { bottom: -7px; }
+  .bubble .goal { margin-top: 2px; }
+  .think .d1 { width: 8px; height: 8px; }
+  .think .d2 { width: 12px; height: 12px; }
+  .think .cloud { font-size: 11.5px; }
+  .lp-card .pz { gap: 5px; padding: 10px; }
+  .pz-row { gap: 4px; }
+  .pz-h { font-size: 9.5px; }
+  .pz-chip { padding: 2px 6px; border-radius: 6px; font-size: 11px; }
+  .pz-arrow { font-size: 16px; }
+  .pz-word { font-size: 11px; }
+  .pz-word b { margin-left: 3px; padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+  .pz-why { font-size: 11px; }
+  .lp-progress { width: 100%; gap: 8px; }
+  .lp-progress li { font-size: 11px; }
+}
 
 .modules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
 @media (max-width: 760px) { .modules { grid-template-columns: 1fr; } }
