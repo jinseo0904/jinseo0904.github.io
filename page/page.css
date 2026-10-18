@@ -4,6 +4,8 @@
 :root {
   --bg: #fffcf3;
   --bg-2: #fbf5e4;
+  --p2: #f4f8f9;     /* second half (how it works onward): a cooler tint */
+  --p2-alt: #eaf2f4;
   --card: #ffffff;
   --ink: #1f1b12;
   --ink-2: #4a4436;
@@ -30,7 +32,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #13120e; --bg-2: #1a1813; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
+    --bg: #13120e; --bg-2: #1a1813; --p2: #111618; --p2-alt: #151c1f; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
     --muted: #a0977f; --border: #33302766; --hex: #2d2a22; --hex-hover: #38342a;
     --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a; --green: #6ccf8c; --green-soft: #16301f;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
@@ -38,7 +40,7 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #13120e; --bg-2: #1a1813; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
+  --bg: #13120e; --bg-2: #1a1813; --p2: #111618; --p2-alt: #151c1f; --card: #1e1c17; --ink: #f1ecdf; --ink-2: #d2cbb9;
   --muted: #a0977f; --border: #33302766; --hex: #2d2a22; --hex-hover: #38342a;
   --honey-soft: #3a3013; --teal: #5cc3de; --teal-soft: #15313a; --green: #6ccf8c; --green-soft: #16301f;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
@@ -298,6 +300,8 @@ button { font: inherit; color: inherit; }
 /* ---------- content sections ---------- */
 section.block { padding: 88px 0; border-top: 1px solid var(--border); }
 section.block.alt { background: var(--bg-2); }
+section.block.part2 { background: var(--p2); }
+section.block.part2.alt { background: var(--p2-alt); }
 .eyebrow { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--honey-2); }
 h2 { margin: 6px 0 16px; font-family: var(--mono); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -.03em; }
 h3 { font-size: 19px; line-height: 1.3; }
@@ -336,6 +340,8 @@ mark.hl { background: linear-gradient(transparent 55%, var(--honey-soft) 55%); c
 }
 .actions-row a:hover, .actions-row button:hover { border-color: var(--ink-2); }
 .actions-row .primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.actions-row .hl-btn { background: var(--honey); border-color: var(--honey); color: #1f1b12; box-shadow: 0 0 0 4px var(--honey-soft); }
+.actions-row .hl-btn:hover { border-color: var(--honey-2); box-shadow: 0 0 0 4px var(--honey-soft), 0 6px 16px rgba(224, 168, 0, .3); }
 
 .tldr {
   margin-top: 40px; padding: 22px 26px; border-radius: 16px; background: var(--card); border: 1px solid var(--border);
