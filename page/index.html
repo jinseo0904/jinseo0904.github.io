@@ -28,9 +28,10 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   <a class="brand" href="#top">PAGE</a>
   <nav>
     <span class="links">
-      <a href="#why">Why</a>
+      <a href="#why">Motivation</a>
       <a href="#idea">Idea</a>
-      <a href="#how">How it works</a>
+      <a href="#findings">Key Findings</a>
+      <a href="#demo">Demo</a>
       <a href="#results">Results</a>
       <a href="#cite">Cite</a>
     </span>
@@ -145,7 +146,7 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <section class="block alt" id="idea">
   <div class="wrap">
     <div class="eyebrow">The idea</div>
-    <h2>Answer questions for science.<br>Enjoy your favorite games, about yourself.</h2>
+    <h2>Answer questions for science.<br>Your information shapes your favorite game.</h2>
     <p class="intro">The PAGE framework consists of three modules: (1) the <mark class="mod data">data collection module</mark> collects individuals’ self-reports and passive sensing data, (2) the <mark class="mod llm">personalization module</mark> aggregates the collected data and uses it to tailor game components, and (3) the <mark class="mod game">game module</mark> delivers the personalized game, which is then enjoyed by participants.</p>
 
     <div class="lp">
@@ -170,13 +171,12 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
         <div class="art pz" id="lp-pz">
           <div class="pz-h" style="--d:0s">Yesterday’s data</div>
           <div class="pz-row">
-            <span class="pz-chip data" style="--d:.4s">📍 Cafe, 2–4 pm</span>
+            <span class="pz-chip data" style="--d:.4s">📍 Cafe, 8–11 am</span>
             <span class="pz-chip data" style="--d:.8s">💬 “studying at a cafe”</span>
           </div>
           <div class="pz-arrow" style="--d:1.6s" aria-hidden="true">↓ <small>LLM</small></div>
-          <div class="pz-word" style="--d:2.4s"><small>Puzzle word</small> <b>COFFEE</b></div>
-          <div class="pz-why" style="--d:3.4s">↳ The person was studying at a cafe</div>
-          <div class="pz-chip game pz-clue" style="--d:4.4s">“You enjoyed a warm ____ while studying yesterday.”</div>
+          <div class="pz-word" style="--d:2.4s"><small>Puzzle word</small> <b>CAFE</b></div>
+          <div class="pz-chip game pz-clue" style="--d:3.6s">“Your productivity was fueled by a morning grind session at the ____.”</div>
         </div>
         <figcaption>
           <span class="tag llm">2 · Personalization module</span>
@@ -187,9 +187,9 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
       <figure class="scene lp-card lp-game">
         <div class="art"><img src="{{ '/images/playing_games.png' | relative_url }}" alt="The same participant happily playing a word puzzle on their phone" width="239" height="213" loading="lazy">
           <div class="bubble clue" id="lp-clue">
-            <span class="sr-only">Clue: You enjoyed a warm ____ while studying yesterday. Goal word: COFFEE.</span>
-            <span class="clue-t" aria-hidden="true" data-text="You enjoyed a warm ____ while studying yesterday."></span>
-            <span class="goal" aria-hidden="true">(COFFEE)</span>
+            <span class="sr-only">Clue: Your productivity was fueled by a morning grind session at the ____. Goal word: CAFE.</span>
+            <span class="clue-t" aria-hidden="true" data-text="Your productivity was fueled by a morning grind session at the ____."></span>
+            <span class="goal" aria-hidden="true">(CAFE)</span>
           </div>
         </div>
         <figcaption>
@@ -197,12 +197,114 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
           <p>Participants enjoy word puzzles with clues personalized based on their own data</p>
         </figcaption>
       </figure>
+      <div class="lp-phone" id="lp-phone">
+        <img class="shot" src="{{ '/images/games.png' | relative_url }}" alt="The PAGE app: a word wheel with letters C, A, R, E, F, U, L and personalized clue cards, including “Your productivity was fueled by a morning grind session at the ____.”" width="484" height="974" loading="lazy">
+        <span class="ring" aria-hidden="true"></span>
+      </div>
     </div>
     <ol class="lp-progress" aria-hidden="true">
       <li class="data"><span class="track"><i></i></span>1 · Data collection</li>
       <li class="llm"><span class="track"><i></i></span>2 · Personalization</li>
       <li class="game"><span class="track"><i></i></span>3 · Gameplay</li>
     </ol>
+  </div>
+</section>
+
+<!-- ============ Key findings ============ -->
+<section class="block" id="findings">
+  <div class="wrap">
+    <div class="eyebrow">Key findings</div>
+    <h2>People played, and shared more</h2>
+    <p class="intro">In a 2-week study, 15 participants spent one week answering smartwatch self-reports alone and one week with a daily personalized puzzle added. The puzzle was optional, and <b>playing was not paid</b>.</p>
+
+    <div class="kf">
+      <figure class="scene kf-card">
+        <div class="art kf-pref">
+          <div class="kf-n h" data-count="80">0<small>%</small></div>
+          <div class="kf-hexes" aria-hidden="true">
+            <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i><i class="no"></i><i class="no"></i><i class="no"></i>
+          </div>
+          <div class="kf-cap">12 of 15 participants</div>
+        </div>
+        <figcaption>
+          <span class="tag game">Preferred the puzzle week</span>
+          <p>Most participants preferred the week with puzzles, and 14 of 15 wanted to keep playing after the study ended.</p>
+        </figcaption>
+      </figure>
+      <figure class="scene kf-card">
+        <div class="art kf-unlock">
+          <div class="kf-shot"><img class="shot" src="{{ '/images/games.png' | relative_url }}" alt="Clue cards in the PAGE app, including a locked card labeled “Tap to unlock”" width="484" height="974" loading="lazy"><span class="tap" aria-hidden="true"></span></div>
+          <div class="kf-side">
+            <div class="kf-n t" data-count="1188">0</div>
+            <div class="kf-cap">extra answers to unlock clues</div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="tag data">Answered more, for free</span>
+          <p>Participants answered extra in-game questions to unlock clues (about 79 each), without being paid to play.</p>
+        </figcaption>
+      </figure>
+      <figure class="scene kf-card">
+        <div class="art kf-rich">
+          <div class="kf-n t" data-count="72" data-prefix="+">0</div>
+          <div class="kf-cap">unique details in self-reports</div>
+          <div class="kf-bars" aria-hidden="true">
+            <div class="kf-bar p"><span>Puzzle</span><b style="--w:100%"></b><em>761</em></div>
+            <div class="kf-bar n"><span>No puzzle</span><b style="--w:90.5%"></b><em>689</em></div>
+          </div>
+        </div>
+        <figcaption>
+          <span class="tag data">Richer self-reports</span>
+          <p>Spoken self-reports named more distinct activities, places, objects, and people during the puzzle week (761 vs. 689 unique tags).</p>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="kf-more"><a href="#results">See the full results ↓</a></p>
+  </div>
+</section>
+
+<!-- ============ Feedback loop ============ -->
+<section class="block alt" id="loop">
+  <div class="wrap">
+    <div class="eyebrow">The feedback loop</div>
+    <h2>Share more, play more, learn more</h2>
+    <p class="intro">Personalized games motivate participants to provide richer self-reports. More detailed information, in turn, makes the games more interesting. During this self-reinforcing feedback loop, researchers can get <mark class="hl">richer, voluntary study data</mark>.</p>
+
+    <div class="fl">
+      <figure class="scene lp-card fl-report">
+        <div class="art"><img src="{{ '/images/self_reporting.png' | relative_url }}" alt="A participant answering a self-report on their phone" width="263" height="223" loading="lazy">
+          <div class="bubble say fl-say show"><span class="fl-t">“<mark>Sitting</mark> in my <mark>room</mark> and <mark>working</mark> on my <mark>laptop</mark> for my <mark>coding homework</mark>”</span></div>
+        </div>
+        <figcaption>
+          <span class="tag data">Richer self-reports</span>
+          <p>Participants share more about their day</p>
+        </figcaption>
+      </figure>
+      <div class="fl-cycle" aria-hidden="true">
+        <svg viewBox="0 0 100 220"><path class="arc top" d="M8 74 C 22 18, 78 18, 90 66"/><path class="head top" d="M80 62 L93 78 L97 58 z"/><path class="arc bot" d="M92 146 C 78 202, 22 202, 10 154"/><path class="head bot" d="M20 158 L7 142 L3 162 z"/></svg>
+        <span class="fl-day">Day 3</span>
+      </div>
+      <figure class="scene lp-card fl-game">
+        <div class="art"><img src="{{ '/images/playing_games.png' | relative_url }}" alt="The participant playing a personalized word puzzle" width="239" height="213" loading="lazy">
+          <div class="bubble clue fl-clue show"><span class="fl-t">Your laptop kept you busy with ______ homework.</span><span class="goal show">(CODING)</span></div>
+          <span class="fl-react show">🤩</span>
+        </div>
+        <figcaption>
+          <span class="tag game">More interesting personalization</span>
+          <p>Tomorrow’s clues get more personal and more fun</p>
+        </figcaption>
+      </figure>
+      <svg class="lp-step fl-step" viewBox="0 0 80 20" aria-hidden="true"><path class="arc" d="M6 10 H64"/><path class="head" d="M62 3 L76 10 L62 17 z"/></svg>
+      <figure class="scene lp-card fl-res">
+        <div class="art"><img src="{{ '/images/researchers.png' | relative_url }}" alt="A researcher reviewing participants’ data on a monitor" width="512" height="296" loading="lazy">
+          <div class="fl-chips" aria-label="Details collected: works on a laptop, works in their room, sits while working, takes a coding class, does homework at home"><span class="fl-chip show">works on a laptop</span><span class="fl-chip show">works in their room</span><span class="fl-chip show">sits while working</span><span class="fl-chip show">takes a coding class</span><span class="fl-chip show">does homework at home</span></div>
+        </div>
+        <figcaption>
+          <span class="tag llm">Richer study data</span>
+          <p>Researchers collect detailed data that people chose to share</p>
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -357,46 +459,25 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   </div>
 </section>
 
-<!-- ============ Lessons ============ -->
-<section class="block alt" id="lessons">
-  <div class="wrap">
-    <div class="eyebrow">Design lessons</div>
-    <h2>What we’d tell the next person building one</h2>
-    <div class="lessons">
-      <div class="lesson"><div class="n">01</div><h3>Self-report clues beat location clues</h3><p>Participants easily connected clues to things they had said themselves. Clues from GPS often referred to places they had only passed through, which felt confusing or even unsettling. Prioritize data people recognize and feel ownership over.</p></div>
-      <div class="lesson"><div class="n">02</div><h3>Calibrate difficulty in both directions</h3><p>Puzzles with too many words (“once I knew there were 76 words…”) made people give up before starting. Puzzles that were too easy were boring. Adjust difficulty and the strength of hints to each player.</p></div>
-      <div class="lesson"><div class="n">03</div><h3>Keep unlock questions from interrupting play</h3><p>Eight of 15 participants didn’t mind trading answers for hints. Seven found the pop-ups disruptive. Consider fewer prompts, multiple choice only, or answering questions before the game starts.</p></div>
-      <div class="lesson"><div class="n">04</div><h3>Give people control over their data</h3><p>Show people which data shapes their clues, and let them opt out of certain sources (such as location) at any time. The discomfort around privacy is also a chance to build better-informed consent over the course of a study.</p></div>
-    </div>
-
-    <div class="facts">
-      <div class="fact"><div class="k">Participants</div><div class="v">15 people who play word puzzles</div></div>
-      <div class="fact"><div class="k">Design</div><div class="v">2 weeks, within-subjects, counterbalanced</div></div>
-      <div class="fact"><div class="k">µEMA</div><div class="v">Every 15 min, 8 AM–10 PM, voice or tap</div></div>
-      <div class="fact"><div class="k">Prompts answered</div><div class="v">5,286 of 6,821 (70% by voice)</div></div>
-      <div class="fact"><div class="k">LLM</div><div class="v">Gemma 3 27B, run locally for privacy</div></div>
-      <div class="fact"><div class="k">Platform</div><div class="v">Android app + Wear OS smartwatch</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ Beyond word puzzles ============ -->
-<section class="block" id="beyond">
+<section class="block alt" id="beyond">
   <div class="wrap">
     <div class="eyebrow">Beyond word puzzles</div>
     <h2>A framework, not just a puzzle</h2>
-    <p class="intro">The word puzzle is one case study. PAGE is not limited to text: the same three modules (a game, a data collection method, and a generative model that connects them) can work with other models and other kinds of content. Vision, video, and audio models could personalize games that people already enjoy in very different forms.</p>
-
-    <div class="modules">
-      <div class="module"><div class="ico">🔤</div><h3>Text · this paper</h3><p>An LLM turns self-reports and sensing data into a diary and personalized clues for a word puzzle.</p></div>
-      <div class="module"><div class="ico">🖼️</div><h3>Images</h3><p>Vision and image-generation models could build visual puzzles or scenes from the places and moments participants report.</p></div>
-      <div class="module"><div class="ico">🎬</div><h3>Video &amp; beyond</h3><p>Video and audio models could turn a participant’s week into story-driven or recap-style content that grows with what they share.</p></div>
+    <div class="beyond">
+      <p>Word puzzles are just our first case study. PAGE can, and should, go further: the same three modules (data collection, a generative model for personalization, and a game) work with <mark class="hl">any model and any game people already enjoy</mark>.</p>
+      <ul class="beyond-list">
+        <li><span class="ico">🔤</span><span><b>Text</b> · LLM-written clues for word puzzles, as in this paper</span></li>
+        <li><span class="ico">🖼️</span><span><b>Images</b> · visual puzzles or scenes built from the places and moments people report</span></li>
+        <li><span class="ico">🎬</span><span><b>Video &amp; audio</b> · story-driven or recap-style content that grows with what people share</span></li>
+      </ul>
+      <p class="beyond-more">For more details, including design lessons and the full study results, read our paper. <a class="pill-link" href="{{ '/files/PAGE_UIST.pdf' | relative_url }}" target="_blank" rel="noopener">📄 Paper PDF</a></p>
     </div>
   </div>
 </section>
 
 <!-- ============ Cite ============ -->
-<section class="block alt" id="cite">
+<section class="block" id="cite">
   <div class="wrap">
     <div class="eyebrow">Cite</div>
     <h2>BibTeX</h2>

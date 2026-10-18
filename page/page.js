@@ -619,7 +619,9 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         var t = en.target;
-        if (t.classList.contains('stage')) {
+        if (t.classList.contains('kf')) {
+          t.classList.add('in');
+        } else if (t.classList.contains('stage')) {
           t.classList.add('in');
           if ($('#diary', t)) setTimeout(typeDiary, 400);
         } else if (t.hasAttribute('data-count')) {
@@ -631,10 +633,11 @@
       });
     }, { threshold: 0.25 });
     $$('.stage').forEach(function (s) { io.observe(s); });
+    $$('.kf').forEach(function (s) { io.observe(s); });
     $$('[data-count]').forEach(function (s) { io.observe(s); });
     io.observe(barsEl);
   } else {
-    $$('.stage').forEach(function (s) { s.classList.add('in'); });
+    $$('.stage, .kf').forEach(function (s) { s.classList.add('in'); });
     typeDiary();
     $$('[data-count]').forEach(countUp);
     $$('.fill').forEach(function (f) { f.style.width = f.getAttribute('data-w') + '%'; });
@@ -646,8 +649,8 @@
      on the phone with its goal word. The active card stays in focus and a
      three-part progress bar tracks the phase. Replays while on screen.
      ------------------------------------------------------------------ */
-  var loop = $('.lp'), say = $('#lp-say'), think = $('#lp-think'), clue = $('#lp-clue'), pz = $('#lp-pz');
-  if (loop && say && think && clue && pz) {
+  var loop = $('.lp'), say = $('#lp-say'), think = $('#lp-think'), clue = $('#lp-clue'), pz = $('#lp-pz'), phone = $('#lp-phone');
+  if (loop && say && think && clue && pz && phone) {
     var clueT = $('.clue-t', clue), goal = $('.goal', clue), clueText = clueT.getAttribute('data-text');
     var bars = $$('.lp-progress li'), cards = $$('.lp-card');
     var PHASES = [['data', 9000], ['llm', 9000], ['game', 15600]];
@@ -662,6 +665,8 @@
       timers.forEach(clearTimeout); timers = [];
       [say, think, clue, goal].forEach(function (n) { n.classList.remove('show'); });
       pz.classList.remove('run');
+      phone.classList.remove('hit');
+      phone.classList.add('wait');
       cards.forEach(function (c) { c.classList.remove('on'); });
       bars.forEach(function (li) { li.classList.remove('on'); setBar(li, false); });
       loop.removeAttribute('data-phase');
@@ -670,6 +675,7 @@
       loop.setAttribute('data-phase', PHASES[i][0]);
       bars.forEach(function (li, j) { li.classList.toggle('on', j === i); });
       cards.forEach(function (c, j) { c.classList.toggle('on', j === i); });
+      phone.classList.toggle('wait', i !== 2);
       bars[i].offsetWidth; // flush so the fill animates from 0
       setBar(bars[i], true, PHASES[i][1]);
     };
@@ -682,7 +688,7 @@
         node.nodeValue = clueText.slice(0, ++i);
         rest.textContent = clueText.slice(i);
         if (i < clueText.length) return later(step, 38);
-        later(function () { cursor.remove(); goal.classList.add('show'); }, 900);
+        later(function () { cursor.remove(); goal.classList.add('show'); phone.classList.add('hit'); }, 900);
       })();
     };
     var playLoop = function () {
@@ -693,17 +699,109 @@
       later(function () { think.classList.add('show'); }, 3600);
       later(function () { phase(1); pz.classList.add('run'); }, t1);
       later(function () { phase(2); typeClue(); }, t2);
-      later(function () { [say, think, clue].forEach(function (n) { n.classList.remove('show'); }); pz.classList.remove('run'); }, t3);
+      later(function () { [say, think, clue].forEach(function (n) { n.classList.remove('show'); }); pz.classList.remove('run'); phone.classList.remove('hit'); }, t3);
       later(playLoop, t3 + 2100);
     };
     if (reduceMotion || !('IntersectionObserver' in window)) {
       clueT.textContent = clueText;
       [say, think, clue, goal].forEach(function (n) { n.classList.add('show'); });
       pz.classList.add('run');
+      phone.classList.add('hit');
     } else {
       new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) playLoop(); else resetLoop();
       }, { threshold: 0.2 }).observe(loop);
+    }
+  }
+
+  /* ------------------------------------------------------------------
+     Feedback loop: over three days the self-report gets richer, the next
+     day's clue gets more personal, and each new detail lands in the
+     researcher's dataset. Replays while on screen.
+     ------------------------------------------------------------------ */
+  var fl = $('.fl');
+  if (fl) {
+    var DAYS = [
+      { say: '[Working] on my [laptop]', clue: 'You spent part of yesterday working on your ______.', word: 'LAPTOP', react: '🙂',
+        tags: ['works on a laptop'] },
+      { say: '[Sitting] in my [room], [working] on my [laptop]', clue: 'You set up your laptop and worked from your ____.', word: 'ROOM', react: '😄',
+        tags: ['works in their room', 'sits while working'] },
+      { say: '[Sitting] in my [room] and [working] on my [laptop] for my [coding homework]', clue: 'Your laptop kept you busy with ______ homework.', word: 'CODING', react: '🤩',
+        tags: ['takes a coding class', 'does homework at home'] }
+    ];
+    var flSayB = $('.fl-say', fl), flSay = $('.fl-t', flSayB), flClueB = $('.fl-clue', fl), flClue = $('.fl-t', flClueB);
+    var flGoal = $('.goal', flClueB), flReact = $('.fl-react', fl), flDay = $('.fl-day', fl), flChips = $('.fl-chips', fl);
+    var flCards = $$('.lp-card', fl), flTimers = [];
+    var flLater = function (fn, ms) { flTimers.push(setTimeout(fn, ms)); };
+    var flPhase = function (name, card) {
+      fl.setAttribute('data-phase', name);
+      flCards.forEach(function (c, j) { c.classList.toggle('on', j === card); });
+    };
+    // Types text into node; [bracketed] words become highlighted marks. Calls done when finished.
+    var flType = function (node, text, done) {
+      var tokens = text.split(/(\[[^\]]+\])/).filter(Boolean), ti = 0, ci = 0, cur = null;
+      var cursor = el('span', 'cursor');
+      node.textContent = '';
+      node.appendChild(cursor);
+      (function step() {
+        if (ti >= tokens.length) { cursor.remove(); return done(); }
+        var t = tokens[ti], isMark = t[0] === '[', str = isMark ? t.slice(1, -1) : t;
+        if (ci === 0) { cur = isMark ? el('mark') : document.createTextNode(''); node.insertBefore(cur, cursor); }
+        ci++;
+        if (isMark) cur.textContent = str.slice(0, ci); else cur.nodeValue = str.slice(0, ci);
+        if (ci >= str.length) { ti++; ci = 0; }
+        flLater(step, 34);
+      })();
+    };
+    var flReset = function () {
+      flTimers.forEach(clearTimeout); flTimers = [];
+      [flSayB, flClueB, flGoal, flReact].forEach(function (n) { n.classList.remove('show'); });
+      flChips.textContent = '';
+      flCards.forEach(function (c) { c.classList.remove('on'); });
+      fl.removeAttribute('data-phase');
+    };
+    var flDayRun = function (i) {
+      var d = DAYS[i];
+      flDay.textContent = 'Day ' + (i + 1);
+      flDay.classList.remove('bump'); flDay.offsetWidth; flDay.classList.add('bump');
+      flPhase('report', 0);
+      [flClueB, flGoal, flReact].forEach(function (n) { n.classList.remove('show'); });
+      flSayB.classList.add('show');
+      flType(flSay, '“' + d.say + '”', function () {
+        flLater(function () {
+          flPhase('game', 1);
+          flClueB.classList.add('show');
+          flType(flClue, d.clue, function () {
+            flGoal.textContent = '(' + d.word + ')';
+            flGoal.classList.add('show');
+            flLater(function () { flReact.textContent = d.react; flReact.classList.add('show'); }, 500);
+            flLater(function () {
+              flPhase('res', 2);
+              d.tags.forEach(function (t, k) {
+                var chip = el('span', 'fl-chip', t);
+                flChips.appendChild(chip);
+                flLater(function () { chip.classList.add('show'); }, 250 + k * 350);
+              });
+              flLater(function () {
+                if (i < DAYS.length - 1) {
+                  flPhase('back', 0);
+                  flSayB.classList.remove('show');
+                  flLater(function () { flDayRun(i + 1); }, 1400);
+                } else {
+                  flLater(function () { flReset(); flLater(function () { flDayRun(0); }, 600); }, 3200);
+                }
+              }, 2200);
+            }, 1800);
+          });
+        }, 900);
+      });
+    };
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        flReset();
+        if (entries[0].isIntersecting) flDayRun(0);
+        else flDay.textContent = 'Day 1';
+      }, { threshold: 0.2 }).observe(fl);
     }
   }
 
