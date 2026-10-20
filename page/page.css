@@ -804,3 +804,9 @@ mark.tip::after {
   box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 10;
 }
 mark.tip:hover::after, mark.tip:focus::after { opacity: 1; transform: translate(-50%, 0); }
+
+/* in-text link back to an earlier section */
+a.jump { padding: 0 .15em; border-radius: 3px; font-weight: 600; color: var(--ink); text-decoration: none; background: linear-gradient(transparent 50%, var(--honey-soft) 50%); box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+a.jump::after { content: " ↑"; color: var(--ink-2); font-weight: 400; }
+a.jump:hover { background: var(--honey-soft); }
+#how { scroll-margin-top: 56px; }

@@ -233,7 +233,7 @@
     if (w.indexOf(this.center) === -1) return this.reject('Missing center letter');
     if (w.split('').some(function (l) { return self.letters.indexOf(l) === -1; })) return this.reject('Bad letters');
     if (this.found.indexOf(w) !== -1) return this.reject('Already found');
-    if (this.words.indexOf(w) === -1) return this.reject('Not in word list');
+    if (this.words.indexOf(w) === -1) return this.reject(this.opts.notInList || 'Not in word list');
 
     this.found.push(w);
     if (this.countEl) this.renderFound();
@@ -419,7 +419,7 @@
         $('.tag', gateClueBtn).textContent = 'P4';
         var more = $('.more', gateClueBtn);
         if (more) more.textContent = 'P4: starts with P, 4 letters.';
-        showNote('📊 That’s another answer for the researchers! In our study, participants answered <b>1,188</b> of these questions just to get hints.');
+        showNote('📊 That’s another answer for the researchers! In our study, participants answered <b>1,188</b> questions about themselves and their activities just to get hints.');
       });
     }
   });
@@ -538,6 +538,7 @@
   var demoWords = cardData.map(function (d) { return d.w; });
   new Puzzle($('#demo-puzzle'), demoWords, {
     showTotal: true,
+    notInList: 'Only the 10 clue-card words count here',
     onFound: function (w) {
       var c = cards[w];
       if (!c) return null;
