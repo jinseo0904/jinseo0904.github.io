@@ -311,16 +311,16 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <!-- ============ How it works (pipeline) ============ -->
 <section class="block part2" id="how">
   <div class="wrap">
-    <div class="eyebrow">How it works</div>
-    <h2>From yesterday’s data to today’s puzzle</h2>
-    <p class="intro">Every night at 3 AM, PAGE turns the previous day’s data into a new puzzle. The example below follows one fictional day, based on the example in the paper’s Figure 3.</p>
+    <div class="eyebrow">Demo</div>
+    <h2>Turning yesterday's data into a word wheel puzzle</h2>
+    <p class="intro">During the feasibility study, PAGE generated personalized word wheel puzzles based on the participants' behavioral data collected from the previous day. Follow this example, which shows data from one fictional day.</p>
 
     <div class="pipeline">
       <div class="stage data">
         <div class="num">1</div>
         <div class="body">
-          <h3>Collect: self-reports + passive sensing</h3>
-          <p class="desc">The watch asks about posture and activity every 15 minutes, and participants answer by voice or tap. The phone and watch also passively log location, steps, heart rate, and more.</p>
+          <h3>Data collection module: Multimodal µEMA + Passive Sensing</h3>
+          <p class="desc">The smartwatch prompts participants every 15 minutes to ask about their momentary posture and activity, which participants answer by voice or tap. The watch and the paird smartphone also passively log location, steps, heart rate, and more.</p>
           <div class="timeline">
             <div class="ev"><span class="t">7:02 AM</span><span>🎙</span><div><q>Eating a bowl of cereal in the kitchen</q> <span class="src">µEMA · voice</span></div></div>
             <div class="ev"><span class="t">9:00 AM</span><span>🎙</span><div><q>Standing, washing my face, getting ready for college</q> <span class="src">µEMA · voice</span></div></div>
@@ -335,8 +335,8 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
       <div class="stage">
         <div class="num">2</div>
         <div class="body">
-          <h3>Synthesize: a narrative diary of your day</h3>
-          <p class="desc">The data is put in time order and given to the LLM, which writes a first-person diary. The prompt tells it to keep specific details (“a latte,” not “a drink”) and not to invent anything.</p>
+          <h3>Personalization module: Generating a narrative diary</h3>
+          <p class="desc">The data are aggregated and organized in time order and given to the LLM, which writes a first-person diary of the day to be used as a personal context.</p>
           <div class="diary" id="diary" data-text="I spent the night at &lt;Home&gt;. At 7 AM I had a bowl of [cereal] in the kitchen, and by 9 AM I was standing and washing my [face], getting ready for college. Around noon I settled into a [café] near &lt;Campus&gt; with a latte, working on my laptop. In the afternoon my heart rate spiked as I walked fast to make my 3 PM lecture. At 8 PM I walked to &lt;Station&gt; to get back home. I was sitting, [calling] my friend on the train."></div>
         </div>
       </div>
@@ -344,8 +344,8 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
       <div class="stage">
         <div class="num">3</div>
         <div class="body">
-          <h3>Generate: a word wheel and its word list</h3>
-          <p class="desc">A random 7-letter seed word sets the letters, and one letter is picked as the center. Every valid dictionary word is extracted. Rare, inflected, obsolete, and jargon words are then filtered out, first by word frequency and then by the LLM.</p>
+          <h3>Personalization module: Generating a word list</h3>
+          <p class="desc">The module randomly picks a random 7-letter seed word, and then picks one letter as the center. The module then extracts all valid words from an English dictionary. Rare, inflected, obsolete, and jargon words are then filtered out from the finalized word list.</p>
           <div class="wordgen">
             <div class="seed">seed word: CAREFUL · center: C
               <div class="letters"><span>A</span><span>R</span><span>E</span><span class="c">C</span><span>F</span><span>U</span><span>L</span></div>
@@ -361,13 +361,13 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
       <div class="stage">
         <div class="num">4</div>
         <div class="body">
-          <h3>Personalize: a clue for each word, drawn from your day</h3>
-          <p class="desc">The LLM links puzzle words to real moments in the diary. Words it can’t link get a “priming” clue that depends on your answer to a question, or a generic crossword-style clue as a last resort.</p>
+          <h3>Personalization module: Generating personalized word clues</h3>
+          <p class="desc">The LLM links puzzle words to the narrative diary context. Words it can’t link get a <mark class="tip" tabindex="0" data-tip="For more details on how priming clues are implemented, please read our paper.">“priming” clue</mark> that depends on your answer to a question, or a generic crossword-style clue as a fallback.</p>
           <div class="cluegen">
-            <div class="ex"><b>FACE</b><span>Your morning routine involves carefully washing your ____. <span class="badge ctx">contextual · self-report</span></span></div>
-            <div class="ex"><b>CELLULAR</b><span>To call your friend on the train, your phone needed an active ________ service. <span class="badge ctx">contextual · logical link</span></span></div>
+            <div class="ex"><b>FACE</b><span>Your morning routine involves carefully washing your ____. <span class="badge ctx">personalized</span></span></div>
+            <div class="ex"><b>CELLULAR</b><span>To call your friend on the train, your phone needed an active ________ service. <span class="badge ctx">personalized</span></span></div>
             <div class="ex"><b>CARE</b><span>Depends on your answer to “Do you look after a pet or plant?” <span class="badge prime">priming</span></span></div>
-            <div class="ex"><b>CLEAR</b><span>Transparent, like a windowpane. <span class="badge">generic fallback</span></span></div>
+            <div class="ex"><b>CLEAR</b><span>Transparent, like a windowpane. <span class="badge">generic</span></span></div>
           </div>
         </div>
       </div>
@@ -378,9 +378,9 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <!-- ============ Playable demo ============ -->
 <section class="block alt part2" id="demo">
   <div class="wrap">
-    <div class="eyebrow">Play it</div>
-    <h2>Today’s puzzle, from that day</h2>
-    <p class="intro">This is the puzzle generated from the fictional day above. Tap a clue card to unlock it, and answer the pop-up question just like participants did. The <b style="color:var(--teal)">researcher’s view</b> shows what each unlock adds to the dataset.</p>
+    <div class="eyebrow">Demo</div>
+    <h2>Personalized word wheel puzzle</h2>
+    <p class="intro">This is the puzzle a participant might get, based on the fictional day above. Tap a clue card to unlock it, and answer the pop-up question just like participants did. The <b style="color:var(--teal)">researcher’s view</b> shows the  <b style="color:var(--teal)">additional uncompensated data</b> they would get by participants unlocking the optional clues.</p>
 
     <div class="play">
       <div class="play-side">
@@ -396,16 +396,15 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
           <div class="found"><span class="count">You haven’t found any words yet.</span><div class="words"></div></div>
         </div>
         <div class="researcher" aria-live="polite">
-          <div class="rh"><span>Researcher’s view: data from unlocks</span><span class="count" id="rcount">0</span></div>
+          <div class="rh"><span>Researcher’s view</span><span class="count" id="rcount">0</span></div>
           <div class="log" id="rlog"><div class="empty">Nothing yet. Unlock a clue to add a data point.</div></div>
         </div>
-        <p class="note">Everything here stays in your browser. This demo stores nothing and sends nothing.</p>
       </div>
 
       <div>
         <div class="cards-head">
           <h3>Clue cards</h3>
-          <div class="legend"><span class="badge ctx">contextual</span><span class="badge prime">priming</span><span class="badge">generic</span></div>
+          <div class="legend"><span class="badge ctx">personalized</span><span class="badge prime">priming</span><span class="badge">generic</span></div>
         </div>
         <div class="cards" id="cards"></div>
 
@@ -420,19 +419,19 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
   <div class="wrap">
     <div class="eyebrow">Feasibility study</div>
     <h2>What happened when 15 people played for a week</h2>
-    <p class="intro">A within-subjects study: each participant spent one week with the smartwatch µEMA only and one week with µEMA plus daily personalized puzzles, in counterbalanced order. Participants were compensated for answering µEMA, but <b>not for playing</b>. The puzzle was completely optional.</p>
+    <p class="intro">During our within-subjects feasibility study, each participant spent one week with the smartwatch µEMA only and one week with µEMA plus daily personalized puzzles, in counterbalanced order. Participants were compensated for answering µEMA, but <b>not for playing</b>. The puzzle was completely optional.</p>
 
     <div class="stats">
       <div class="stat h"><div class="n" data-count="80">0<small>%</small></div><p>preferred the puzzle week (12 of 15)</p></div>
       <div class="stat t"><div class="n" data-count="1188">0</div><p>extra in-game survey answers, voluntary and unpaid (~79 per participant)</p></div>
       <div class="stat t"><div class="n" data-count="72" data-prefix="+">0</div><p>more unique contextual tags in self-reports (761 vs. 689)</p></div>
-      <div class="stat h"><div class="n" data-count="93">0<small>%</small></div><p>want to keep using it after the study (14 of 15)</p></div>
+      <div class="stat h"><div class="n" data-count="93">0<small>%</small></div><p>interested in continuing to use our system after the study (14 of 15)</p></div>
     </div>
 
     <div class="results-grid">
       <div class="panel">
         <h3>Richer self-reports during puzzle week</h3>
-        <p class="desc">Unique semantic tags parsed from spoken µEMA answers, e.g. “Sitting [posture] in my room [location], eating [activity] an apple [object].”</p>
+        <p class="desc">Participants shared <mark class="tip" tabindex="0" data-tip="For more details on how we define and count contextual tags, please read our paper.">more unique contextual tags</mark> about their daily activities and states during the week with personalized word puzzles.</p>
         <div class="bars" id="bars"></div>
         <div class="key"><span><i style="background:var(--honey)"></i>Puzzle week</span><span><i style="background:var(--hex-hover)"></i>No-puzzle week</span></div>
       </div>
@@ -463,7 +462,7 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <section class="block alt part2" id="beyond">
   <div class="wrap">
     <div class="eyebrow">Beyond word puzzles</div>
-    <h2>A framework, not just a puzzle</h2>
+    <h2>Expanding beyond word puzzles</h2>
     <div class="beyond">
       <p>Word puzzles are just our first case study. PAGE can, and should, go further: the same three modules (data collection, a generative model for personalization, and a game) work with <mark class="hl">any model and any game people already enjoy</mark>.</p>
       <ul class="beyond-list">
@@ -479,8 +478,8 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <!-- ============ Cite ============ -->
 <section class="block part2" id="cite">
   <div class="wrap">
-    <div class="eyebrow">Cite</div>
-    <h2>BibTeX</h2>
+    <div class="eyebrow">BibTeX</div>
+    <h2>Please cite our paper!</h2>
     <p class="intro" style="font-size:16px">Jin-seo Kim, Ha Le, Akshat Choube, Varun Mishra, and Stephen S Intille. 2026. Generating Personalized Games with Sensing Data to Support Self-Reported Data Collection. In <i>The 39th Annual ACM Symposium on User Interface Software and Technology (UIST ’26)</i>. ACM. <a href="https://doi.org/10.1145/3830398.3830678">https://doi.org/10.1145/3830398.3830678</a></p>
     <div class="cite">
       <pre id="bibtex">{{ pub.bibtex | strip | escape }}</pre>
@@ -499,14 +498,13 @@ title: "PAGE: Personalized Adaptive Games for Engagement"
 <!-- micro-survey dialog -->
 <div class="sheet-backdrop" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-q">
   <div class="sheet">
-    <div class="cat" id="sheet-cat"></div>
     <h3 id="sheet-q"></h3>
     <div id="sheet-body"></div>
     <div class="actions">
       <button type="button" id="sheet-cancel">CANCEL</button>
       <button type="button" id="sheet-submit" class="submit" disabled>SUBMIT</button>
     </div>
-    <div class="fine">In PAGE, answering unlocks the hint, and your answer becomes study data.</div>
+    <div class="fine">Your answer to this question becomes <mark class="hl">additional study data</mark>.</div>
   </div>
 </div>
 

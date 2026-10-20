@@ -45,8 +45,6 @@
   }
 
   function openSheet(q) {
-    $('#sheet-cat').textContent = q.cat || '';
-    $('#sheet-cat').hidden = !q.cat;
     $('#sheet-q').textContent = q.q;
     var body = $('#sheet-body');
     body.innerHTML = '';
@@ -429,35 +427,40 @@
   /* ------------------------------------------------------------------
      Demo puzzle (CAREFUL / center C) with clue cards
      ------------------------------------------------------------------ */
-  var demoWords = ['CALL', 'FACE', 'CAFE', 'CEREAL', 'CELLULAR', 'CARE', 'RACE', 'CLEAR', 'LACE', 'CURL', 'CAREFUL',
-    'CLUE', 'CALF', 'CURE', 'ACRE', 'CRUEL', 'ULCER', 'FARCE', 'CELLAR', 'RECALL', 'CULL', 'ACCRUE', 'FLEECE',
-    'RECUR', 'CAREER', 'CLEF'];
-
   var cardData = [
-    { w: 'FACE', type: 'ctx', src: '🎙 self-report', clue: 'Your morning routine involves carefully washing your {}.' },
-    { w: 'CALL', type: 'ctx', src: '🎙 self-report', clue: 'You were {}ing your friend on your way home from campus.' },
-    { w: 'CELLULAR', type: 'ctx', src: '🎙 self-report + logic', clue: 'To call your friend on the train, your phone needed an active {} service.' },
-    { w: 'CEREAL', type: 'ctx', src: '🎙 self-report', clue: 'You kicked off the day at 7 AM with a bowl of {} in the kitchen.' },
-    { w: 'CAFE', type: 'ctx', src: '📍 location + POI', clue: 'Around noon you settled into a {} near campus with a latte.' },
-    { w: 'RACE', type: 'ctx', src: '❤️ heart rate + steps', clue: 'Your heart rate spiked in the afternoon as you had to {} to your 3 PM lecture.' },
-    { w: 'CARE', type: 'prime', src: '🧠 your answer',
-      q: { cat: 'Priming question', q: 'Do you look after a pet or a plant at home?', opts: ['Yes', 'No'], key: 'has_pet_or_plant' },
+    { w: 'FACE', type: 'ctx', clue: 'Your morning routine involves carefully washing your {}.' },
+    { w: 'CALL', type: 'ctx', clue: 'You were {}ing your friend on your way home from campus.' },
+    { w: 'CELLULAR', type: 'ctx', clue: 'To call your friend on the train, your phone needed an active {} service.' },
+    { w: 'CEREAL', type: 'ctx', clue: 'You kicked off the day at 7 AM with a bowl of {} in the kitchen.' },
+    { w: 'CAFE', type: 'ctx', clue: 'Around noon you settled into a {} near campus with a latte.' },
+    { w: 'RACE', type: 'ctx', clue: 'Your heart rate spiked in the afternoon as you had to {} to your 3 PM lecture.' },
+    { w: 'CARE', type: 'prime',
+      q: { cat: 'Priming question', q: 'Do you look after a pet or a plant at home?', opts: ['Yes', 'No'], key: 'has_pet_or_plant',
+        say: { 'Yes': 'Has a pet or plant at home', 'No': 'Does not have a pet or plant at home' } },
       clues: {
         'Yes': 'You look after a pet or plant at home, so you know what it takes to {} for something living.',
         'No': 'No pets or plants at home? That’s one less thing to take {} of.'
       } },
-    { w: 'CLEAR', type: 'gen', src: 'fallback', clue: 'Transparent, like a freshly washed window: {}.' },
-    { w: 'CURL', type: 'gen', src: 'fallback', clue: 'A bicep {} at the gym.' },
-    { w: 'CAREFUL', type: 'gen', src: 'fallback · pangram', clue: 'Cautious, watching every step: {}.' }
+    { w: 'CLEAR', type: 'gen', clue: 'Transparent, like a freshly washed window: {}.' },
+    { w: 'CURL', type: 'gen', clue: 'A bicep {} at the gym.' },
+    { w: 'CAREFUL', type: 'gen', clue: 'Cautious, watching every step: {}.' }
   ];
 
   var questionPool = [
-    { cat: 'Cluster labeling', q: 'You spent about 3 hours at a place near campus yesterday (12–3 PM). What is this place to you?', opts: ['Home', 'Work', 'School', 'Café / restaurant', 'Other'], key: 'cluster_label' },
-    { cat: 'Data gap', q: 'Your watch was off between 3 and 5 PM yesterday. What were you doing?', text: true, chips: ['In a lecture', 'Charging the watch', 'At the gym', 'Commuting'], key: 'gap_3pm_5pm' },
-    { cat: 'Priming question', q: 'Are you a morning person?', opts: ['Yes', 'No', 'Depends on the coffee'], key: 'morning_person' },
-    { cat: 'Priming question', q: 'Do you usually cook your own dinner?', opts: ['Yes', 'No', 'Sometimes'], key: 'cooks_dinner' },
-    { cat: 'UX survey', q: 'How difficult is today’s puzzle so far?', opts: ['Too easy', 'Just right', 'Too hard'], key: 'puzzle_difficulty' },
-    { cat: 'Validated survey item (PHQ-9 placeholder)', q: 'Over the last 2 weeks, how often have you been bothered by feeling tired or having little energy?', opts: ['Not at all', 'Several days', 'More than half the days', 'Nearly every day'], key: 'phq9_item4' }
+    { cat: 'Activity', q: 'What were you doing right before visiting this page?', text: true, chips: ['Working', 'Reading papers', 'Taking a break', 'Commuting'], key: 'prior_activity',
+      say: function (a) { return 'Before visiting this page: ' + a.toLowerCase(); } },
+    { cat: 'Priming question', q: 'Do you prefer coffee or tea?', opts: ['Coffee', 'Tea', 'Both', 'Neither'], key: 'coffee_or_tea',
+      say: { 'Coffee': 'Prefers coffee', 'Tea': 'Prefers tea', 'Both': 'Likes both coffee and tea', 'Neither': 'Drinks neither coffee nor tea' } },
+    { cat: 'Priming question', q: 'Are you a morning person?', opts: ['Yes', 'No', 'Depends on the coffee'], key: 'morning_person',
+      say: { 'Yes': 'Is a morning person', 'No': 'Is not a morning person', 'Depends on the coffee': 'Is a morning person after coffee' } },
+    { cat: 'Priming question', q: 'Do you usually cook your own dinner?', opts: ['Yes', 'No', 'Sometimes'], key: 'cooks_dinner',
+      say: { 'Yes': 'Usually cooks their own dinner', 'No': 'Usually does not cook their own dinner', 'Sometimes': 'Sometimes cooks their own dinner' } },
+    { cat: 'UX survey', q: 'How difficult is today’s puzzle so far?', opts: ['Too easy', 'Just right', 'Too hard'], key: 'puzzle_difficulty',
+      say: function (a) { return 'Finds today’s puzzle ' + a.toLowerCase(); } },
+    { cat: 'Mood check-in', q: 'How are you feeling right now?', opts: ['Great', 'Good', 'Okay', 'Not great'], key: 'mood_now',
+      say: function (a) { return 'Currently feels ' + a.toLowerCase(); } },
+    { cat: 'Mood check-in', q: 'How energetic do you feel right now?', opts: ['Very energetic', 'Somewhat', 'A little tired', 'Very tired'], key: 'energy_now',
+      say: { 'Very energetic': 'Currently feels very energetic', 'Somewhat': 'Currently feels somewhat energetic', 'A little tired': 'Currently feels a little tired', 'Very tired': 'Currently feels very tired' } }
   ];
   var queue = [], lastCat = null;
   function nextQuestion() {
@@ -470,28 +473,26 @@
   }
 
   var rlog = $('#rlog'), rcount = $('#rcount'), nData = 0;
-  function logData(cat, key, answer, note) {
+  // Log each answer as a plain-language fact about the participant
+  function logData(q, answer) {
     if (!nData) rlog.innerHTML = '';
     nData++;
     rcount.textContent = nData;
-    var row = el('div', 'row');
-    row.appendChild(el('span', 'k', cat));
-    row.appendChild(el('span', null, key + ' = "' + answer + '"' + (note ? '  · ' + note : '')));
-    rlog.insertBefore(row, rlog.firstChild);
+    var fact = typeof q.say === 'function' ? q.say(answer) : (q.say && q.say[answer]) || answer;
+    rlog.insertBefore(el('div', 'row', fact), rlog.firstChild);
   }
 
-  var typeLabel = { ctx: 'contextual', prime: 'priming', gen: 'generic' };
+  var typeLabel = { ctx: 'personalized', prime: 'priming', gen: 'generic' };
   var typeBadge = { ctx: 'badge ctx', prime: 'badge prime', gen: 'badge' };
   var cards = {};
 
-  function buildCard(d, idx) {
+  function buildCard(d) {
     var b = el('button', 'clue locked');
     b.type = 'button';
-    var tag = el('span', 'tag', 'C' + (idx + 1));
-    var text = el('span', 'text', 'Locked clue · ' + d.w.length + ' letters. Tap to answer a question and unlock it.');
+    var tag = el('span', 'tag');
+    var text = el('span', 'text', '🔒 Locked clue: Tap to answer a question and unlock it.');
     var meta = el('span', 'meta');
     meta.appendChild(el('span', typeBadge[d.type], typeLabel[d.type]));
-    meta.appendChild(el('span', 'badge', d.src));
     b.appendChild(tag); b.appendChild(text); b.appendChild(meta);
     var state = { stage: 0, node: b, tag: tag, text: text, data: d, tmpl: d.clue };
 
@@ -512,7 +513,7 @@
           state.stage = 1;
           reveal(d.clues ? d.clues[a] : d.clue);
           if (!b.classList.contains('solved')) b.appendChild(el('span', 'more', 'Stronger hint? Answer one more →'));
-          logData(q.cat, q.key, a, d.q ? 'seeds tomorrow’s clue' : 'unlocked ' + tag.textContent);
+          logData(q, a);
         });
       } else {
         var q2 = nextQuestion();
@@ -522,7 +523,7 @@
           tag.textContent = d.w[0] + d.w.length;
           var m = $('.more', b);
           if (m) m.textContent = d.w[0] + d.w.length + ': starts with ' + d.w[0] + ', ' + d.w.length + ' letters.';
-          logData(q2.cat, q2.key, a, 'unlocked ' + d.w[0] + d.w.length);
+          logData(q2, a);
         });
       }
     });
@@ -531,8 +532,10 @@
   }
 
   var cardsEl = $('#cards');
-  cardData.forEach(function (d, i) { cardsEl.appendChild(buildCard(d, i)); });
+  cardData.forEach(function (d) { cardsEl.appendChild(buildCard(d)); });
 
+  // Only the words with clue cards are guessable in the web demo
+  var demoWords = cardData.map(function (d) { return d.w; });
   new Puzzle($('#demo-puzzle'), demoWords, {
     showTotal: true,
     onFound: function (w) {
@@ -652,7 +655,7 @@
   var loop = $('.lp'), say = $('#lp-say'), think = $('#lp-think'), clue = $('#lp-clue'), pz = $('#lp-pz'), phone = $('#lp-phone');
   if (loop && say && think && clue && pz && phone) {
     var clueT = $('.clue-t', clue), goal = $('.goal', clue), clueText = clueT.getAttribute('data-text');
-    var bars = $$('.lp-progress li'), cards = $$('.lp-card');
+    var bars = $$('.lp-progress li'), lpCards = $$('.lp-card');
     var PHASES = [['data', 9000], ['llm', 9000], ['game', 15600]];
     var timers = [];
     var later = function (fn, ms) { timers.push(setTimeout(fn, ms)); };
@@ -667,14 +670,14 @@
       pz.classList.remove('run');
       phone.classList.remove('hit');
       phone.classList.add('wait');
-      cards.forEach(function (c) { c.classList.remove('on'); });
+      lpCards.forEach(function (c) { c.classList.remove('on'); });
       bars.forEach(function (li) { li.classList.remove('on'); setBar(li, false); });
       loop.removeAttribute('data-phase');
     };
     var phase = function (i) {
       loop.setAttribute('data-phase', PHASES[i][0]);
       bars.forEach(function (li, j) { li.classList.toggle('on', j === i); });
-      cards.forEach(function (c, j) { c.classList.toggle('on', j === i); });
+      lpCards.forEach(function (c, j) { c.classList.toggle('on', j === i); });
       phone.classList.toggle('wait', i !== 2);
       bars[i].offsetWidth; // flush so the fill animates from 0
       setBar(bars[i], true, PHASES[i][1]);

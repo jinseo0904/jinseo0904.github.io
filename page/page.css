@@ -215,6 +215,9 @@ button { font: inherit; color: inherit; }
   box-shadow: var(--shadow); transition: border-color .15s, transform .15s;
 }
 .clue:hover { border-color: var(--honey-2); transform: translateY(-1px); }
+.clue.solved { background: var(--honey-soft); border-color: var(--honey-2); cursor: default; }
+.clue.solved:hover { transform: none; }
+.clue.solved .tag { background: var(--honey); color: #1f1b12; }
 .clue .tag {
   position: absolute; left: 12px; top: 14px; width: 34px; height: 30px;
   display: grid; place-items: center;
@@ -222,9 +225,11 @@ button { font: inherit; color: inherit; }
   background: var(--hex); font-family: var(--mono); font-size: 11px; font-weight: 800;
 }
 .clue.unlocked .tag { background: var(--honey-soft); }
-.clue.solved .tag { background: var(--honey); color: #1f1b12; }
+/* demo cards show no hexagon until there is a hint or a check mark */
+.clue .tag:empty { display: none; }
+.clue:has(.tag:empty) { padding-left: 16px; }
 .clue .text { color: var(--ink-2); font-size: 15px; line-height: 1.5; }
-.clue.locked .text { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+.clue.locked .text { color: var(--muted); font-size: 14px; }
 .clue .text .blank { display: inline-block; border-bottom: 2px solid var(--honey-2); color: transparent; letter-spacing: .1em; }
 .clue.solved .text .blank { color: var(--ink); font-weight: 700; font-family: var(--mono); }
 .clue .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
@@ -276,7 +281,6 @@ button { font: inherit; color: inherit; }
   width: 100%; max-width: 380px; padding: 22px 22px 16px; border-radius: 18px;
   background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.3); animation: pop .2s ease;
 }
-.sheet .cat { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
 .sheet h3 { margin: 6px 0 14px; font-size: 18px; line-height: 1.35; }
 .sheet .opts { display: grid; gap: 8px; }
 .sheet .opt {
@@ -689,11 +693,11 @@ mark.mod.game { --hl: var(--honey-soft); }
 }
 .researcher .rh { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--teal); color: #fff; font-family: var(--mono); font-size: 13px; font-weight: 700; }
 .researcher .rh .count { padding: 1px 8px; border-radius: 999px; background: rgba(255,255,255,.2); }
-.researcher .log { max-height: 150px; overflow: auto; padding: 8px 14px; font-family: var(--mono); font-size: 12.5px; }
+.researcher .log { max-height: 150px; overflow: auto; padding: 8px 14px; font-size: 14px; }
 .researcher .log .empty { color: var(--muted); padding: 8px 0; }
-.researcher .log .row { display: grid; grid-template-columns: 110px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--border); animation: pop .3s ease; }
+.researcher .log .row { padding: 6px 0; border-bottom: 1px dashed var(--border); color: var(--ink); animation: pop .3s ease; }
+.researcher .log .row::before { content: "+ "; color: var(--teal); font-weight: 700; }
 .researcher .log .row:last-child { border-bottom: 0; }
-.researcher .log .k { color: var(--teal); }
 
 .note { margin-top: 12px; font-size: 13px; color: var(--muted); }
 
@@ -790,3 +794,13 @@ footer.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-betwe
 .win-banner.out { transition: opacity .5s, transform .5s; opacity: 0; transform: translate(-50%, -60%) scale(.95); }
 @keyframes winpop { from { opacity: 0; transform: translate(-50%, -50%) scale(.5); } }
 .tldr p + p { margin-top: 12px; }
+
+/* Hover note on a highlighted term */
+mark.tip { position: relative; cursor: help; color: var(--ink); font-weight: 600; padding: 0 2px; background: linear-gradient(transparent 55%, var(--teal-soft) 55%); border-bottom: 1px dashed var(--teal); }
+mark.tip::after {
+  content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px);
+  width: max-content; max-width: 240px; padding: 8px 10px; border-radius: 8px;
+  background: var(--ink); color: var(--bg); font-size: 12.5px; font-weight: 500; line-height: 1.4; text-align: left;
+  box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 10;
+}
+mark.tip:hover::after, mark.tip:focus::after { opacity: 1; transform: translate(-50%, 0); }
